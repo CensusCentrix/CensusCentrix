@@ -15,3 +15,8 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 Currently a student rn, also a web developer. I am eager to provide service for you making your website/s.
+
+https://censuscentrix.github.io/CensusCentrix/computer-hub-demo.html
+https://censuscentrix.github.io/CensusCentrix/restaurant-landing-demo.html
+https://censuscentrix.github.io/CensusCentrix/student-portfolio-demo.html
+https://censuscentrix.github.io/CensusCentrix/index.html
