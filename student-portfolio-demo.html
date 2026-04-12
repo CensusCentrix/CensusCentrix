@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Demo student portfolio website with generic sample content.">
+  <title>Student Portfolio Demo</title>
+  <style>
+    :root {
+      --navy-950: #07111f;
+      --navy-900: #0f213b;
+      --navy-800: #1a3c66;
+      --orange-500: #ff8d28;
+      --orange-300: #ffc680;
+      --text: #f2f7ff;
+      --muted: #bfd0e8;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.1);
+      --shadow: 0 18px 40px rgba(0,0,0,0.28);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,141,40,0.18), transparent 26%),
+        linear-gradient(160deg, var(--navy-950), var(--navy-900) 55%, #143156);
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    .shell { width: min(calc(100% - 2rem), 1120px); margin: 0 auto; }
+    .topbar { position: sticky; top: 0; z-index: 10; background: rgba(7,17,31,0.84); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .btn, .ghost {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0.85rem 1.2rem;
+      border-radius: 999px; font-weight: 700; transition: transform 0.25s ease;
+    }
+    .btn { background: linear-gradient(135deg, var(--orange-300), var(--orange-500)); color: #09111b; }
+    .ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+    .btn:hover, .ghost:hover { transform: translateY(-2px); }
+    .hero { padding: 4.5rem 0 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; align-items: center; }
+    .eyebrow { display: inline-block; margin-bottom: 1rem; padding: 0.45rem 0.9rem; border-radius: 999px; background: rgba(255,141,40,0.14); color: var(--orange-300); font-weight: 700; }
+    h1 { font-size: clamp(2.7rem, 6vw, 4.8rem); line-height: 0.98; margin-bottom: 1rem; }
+    .hero p { color: var(--muted); max-width: 58ch; margin-bottom: 1.4rem; }
+    .hero-panel {
+      padding: 1.2rem; border-radius: 28px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); box-shadow: var(--shadow);
+    }
+    .profile-ui {
+      padding: 1rem; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      display: grid; gap: 1rem;
+    }
+    .profile-top { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; align-items: center; }
+    .avatar { width: 110px; height: 110px; border-radius: 24px; background: linear-gradient(135deg, var(--orange-500), #ffb86e); }
+    .line { height: 12px; border-radius: 999px; background: rgba(255,255,255,0.14); margin-bottom: 0.6rem; }
+    .line.short { width: 45%; }
+    .line.medium { width: 68%; }
+    .line.long { width: 90%; }
+    .card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+    .mini-card { padding: 1rem; border-radius: 18px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+    section { padding: 1.5rem 0 2.4rem; }
+    .section-head { margin-bottom: 1rem; }
+    .section-head h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); margin-bottom: 0.35rem; }
+    .section-head p { color: var(--muted); max-width: 60ch; }
+    .grid-3, .grid-2 { display: grid; gap: 1rem; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: 0.95fr 1.05fr; }
+    .panel { padding: 1.35rem; border-radius: 22px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .panel p, .panel li { color: var(--muted); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1rem; }
+    .chip { padding: 0.5rem 0.8rem; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); }
+    ul { list-style: none; display: grid; gap: 0.7rem; }
+    .timeline { display: grid; gap: 0.8rem; }
+    .step { padding: 1rem; border-radius: 18px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+    .footer-return { padding: 0 0 3rem; }
+    @media (max-width: 860px) {
+      .hero, .grid-3, .grid-2, .card-grid, .profile-top { grid-template-columns: 1fr; }
+      .nav { flex-direction: column; justify-content: center; padding: 1rem 0; }
+      .btn, .ghost { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell nav">
+      <div class="brand">Student Portfolio Demo</div>
+      <a class="ghost" href="myPortfolio.html">Return to Portfolio</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Portfolio Demo Website</span>
+        <h1>Show skills, projects, and goals with a clean student-friendly layout.</h1>
+        <p>This sample portfolio uses fictional content only. It demonstrates how a client-facing portfolio can present achievements, sample work, and contact sections without exposing private details.</p>
+        <a class="btn" href="#showcase">View Showcase</a>
+      </div>
+      <div class="hero-panel">
+        <div class="profile-ui">
+          <div class="profile-top">
+            <div class="avatar"></div>
+            <div>
+              <div class="line short"></div>
+              <div class="line medium"></div>
+              <div class="line long"></div>
+            </div>
+          </div>
+          <div class="card-grid">
+            <div class="mini-card"><strong>UI Projects</strong><p>Responsive designs for school and portfolio use.</p></div>
+            <div class="mini-card"><strong>Core Skills</strong><p>HTML, CSS, layout systems, and clean section flow.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="showcase">
+      <div class="section-head">
+        <h2>Portfolio Sections</h2>
+        <p>This demo shows the kind of information a student or beginner creative can highlight without using personal identifiers.</p>
+      </div>
+      <div class="grid-3">
+        <article class="panel">
+          <h3>About Snapshot</h3>
+          <p>A short introduction explains interests, goals, and design focus in a polished but simple way.</p>
+          <div class="chip-row"><span class="chip">Goals</span><span class="chip">Interests</span><span class="chip">Strengths</span></div>
+        </article>
+        <article class="panel">
+          <h3>Work Samples</h3>
+          <p>Project cards can show clear categories, outcomes, and a strong visual preview instead of plain text blocks.</p>
+          <div class="chip-row"><span class="chip">Landing Pages</span><span class="chip">Portfolios</span><span class="chip">Business Sites</span></div>
+        </article>
+        <article class="panel">
+          <h3>Contact Prompt</h3>
+          <p>A final section gives visitors one clear next step, whether that is email, inquiry form, or direct booking.</p>
+          <div class="chip-row"><span class="chip">Email</span><span class="chip">Inquiry</span><span class="chip">Call to Action</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid-2">
+        <article class="panel">
+          <h2>Why this format works</h2>
+          <ul>
+            <li>It looks professional without requiring personal data.</li>
+            <li>It can be adapted for students, creatives, and beginners.</li>
+            <li>It creates a stronger first impression than a basic one-column page.</li>
+          </ul>
+        </article>
+        <div class="timeline">
+          <div class="step"><strong>Step 1</strong><p>Introduce the person or brand with a strong headline and visual block.</p></div>
+          <div class="step"><strong>Step 2</strong><p>Highlight work categories and selected project summaries.</p></div>
+          <div class="step"><strong>Step 3</strong><p>End with a clear prompt to message, hire, or collaborate.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer-return">
+      <a class="ghost" href="myPortfolio.html">Return to Portfolio</a>
+    </section>
+  </main>
+</body>
+</html>

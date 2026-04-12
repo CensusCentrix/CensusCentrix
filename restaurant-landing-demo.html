@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Demo restaurant landing page with generic content.">
+  <title>Harbor Flame Bistro</title>
+  <style>
+    :root {
+      --navy-950: #08111b;
+      --navy-900: #102130;
+      --orange-500: #ff8b22;
+      --orange-400: #ffb45d;
+      --sand: #fff4e8;
+      --muted: #dbcbb8;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.1);
+      --shadow: 0 18px 40px rgba(0,0,0,0.3);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--sand);
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at top left, rgba(255,139,34,0.18), transparent 24%),
+        linear-gradient(160deg, #09111b, #111f2d 55%, #162537);
+    }
+    a { text-decoration: none; color: inherit; }
+    .shell { width: min(calc(100% - 2rem), 1150px); margin: 0 auto; }
+    .topbar { position: sticky; top: 0; z-index: 10; background: rgba(8,17,27,0.84); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .btn, .ghost {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0.85rem 1.2rem;
+      border-radius: 999px; font-weight: 700; transition: transform 0.25s ease;
+    }
+    .btn { background: linear-gradient(135deg, var(--orange-400), var(--orange-500)); color: #16100a; }
+    .ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+    .btn:hover, .ghost:hover { transform: translateY(-2px); }
+    .hero {
+      padding: 4.8rem 0 3rem; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 1.5rem; align-items: center;
+    }
+    .eyebrow { display: inline-block; margin-bottom: 1rem; padding: 0.45rem 0.9rem; border-radius: 999px; background: rgba(255,139,34,0.14); color: var(--orange-400); font-weight: 700; }
+    h1 { font-size: clamp(2.8rem, 6vw, 5rem); line-height: 0.96; margin-bottom: 1rem; }
+    .hero p { color: var(--muted); max-width: 58ch; margin-bottom: 1.5rem; }
+    .hero-card { padding: 1.2rem; border-radius: 28px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .menu-scene {
+      min-height: 360px; border-radius: 24px; padding: 1rem; background:
+      linear-gradient(180deg, rgba(255,180,93,0.12), rgba(255,255,255,0.02)),
+      linear-gradient(135deg, #1a2431, #25374d);
+      display: grid; gap: 0.9rem;
+    }
+    .dish-card, .dish-large {
+      border-radius: 20px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .dish-large { min-height: 170px; padding: 1.1rem; display: flex; flex-direction: column; justify-content: end; }
+    .dish-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+    .dish-card { min-height: 92px; padding: 0.95rem; }
+    section { padding: 1.5rem 0 2.5rem; }
+    .section-head { margin-bottom: 1rem; }
+    .section-head h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 0.35rem; }
+    .section-head p { color: var(--muted); max-width: 60ch; }
+    .grid-3, .grid-2 { display: grid; gap: 1rem; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: 0.95fr 1.05fr; }
+    .panel { padding: 1.35rem; border-radius: 22px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .panel p, .panel li { color: var(--muted); }
+    ul { list-style: none; display: grid; gap: 0.7rem; }
+    .offer { padding: 1rem; border-radius: 18px; background: rgba(255,139,34,0.12); border: 1px solid rgba(255,180,93,0.2); margin-top: 1rem; }
+    .footer-return { padding: 0 0 3rem; }
+    @media (max-width: 860px) {
+      .hero, .grid-3, .grid-2, .dish-row { grid-template-columns: 1fr; }
+      .nav { flex-direction: column; justify-content: center; padding: 1rem 0; }
+      .btn, .ghost { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell nav">
+      <div class="brand">Harbor Flame Bistro</div>
+      <a class="ghost" href="myPortfolio.html">Return to Portfolio</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Restaurant Landing Page Demo</span>
+        <h1>Warm atmosphere, bold flavors, and an inviting first impression.</h1>
+        <p>This sample restaurant site uses entirely generic branding and placeholder content. It is designed to show how a landing page can promote offers, menu highlights, and reservations without using any private customer data.</p>
+        <a class="btn" href="#menu">See the Demo Layout</a>
+      </div>
+      <div class="hero-card">
+        <div class="menu-scene">
+          <div class="dish-large">
+            <h3>Chef's Special Night</h3>
+            <p>Seasonal dishes, warm lighting, and a clear booking prompt.</p>
+          </div>
+          <div class="dish-row">
+            <div class="dish-card"><strong>Starter Picks</strong><p>Short menu preview cards.</p></div>
+            <div class="dish-card"><strong>Reservation CTA</strong><p>Simple next step for guests.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div class="section-head">
+        <h2>Landing Page Sections</h2>
+        <p>This layout is built to help restaurants and food brands present atmosphere, menu highlights, and direct booking actions.</p>
+      </div>
+      <div class="grid-3">
+        <article class="panel">
+          <h3>Hero Banner</h3>
+          <p>A strong opening section can combine mood, value, and one action button for reservations or inquiries.</p>
+        </article>
+        <article class="panel">
+          <h3>Menu Highlights</h3>
+          <p>Featured dishes and short descriptions give visitors a reason to keep scrolling and build appetite quickly.</p>
+        </article>
+        <article class="panel">
+          <h3>Booking Prompt</h3>
+          <p>A visible booking action helps convert interest into real reservations or event inquiries.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid-2">
+        <article class="panel">
+          <h2>What a client gets</h2>
+          <ul>
+            <li>A polished visual direction that fits the brand mood.</li>
+            <li>Clear sections for menu highlights, promotions, and booking.</li>
+            <li>A mobile-friendly page that still feels premium on smaller screens.</li>
+          </ul>
+          <div class="offer">
+            <strong>Sample Offer Block</strong>
+            <p>Weekend tasting menu available by reservation only.</p>
+          </div>
+        </article>
+        <article class="panel">
+          <h2>Privacy-safe content</h2>
+          <p>The restaurant name, offers, and descriptions here are all fictional. This makes the demo safe to show publicly while still giving clients a realistic picture of the design quality.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="footer-return">
+      <a class="ghost" href="myPortfolio.html">Return to Portfolio</a>
+    </section>
+  </main>
+</body>
+</html>
