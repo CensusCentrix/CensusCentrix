@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snap Print Digital Solutions</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800family=DM+Sans:wght@400;500;600display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            honey: '#F5A623',
+            honeyDark: '#D4891A',
+            teal: '#1A8B7F',
+            tealDark: '#14706A',
+            cream: '#FFF8EC',
+            charcoal: '#2D2D2D',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .app-root {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .font-display {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .font-body {
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .anim-fade-up {
+      animation: fadeUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .anim-scale {
+      animation: scaleIn 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .delay-1 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+      animation-delay: 0.4s;
+    }
+
+    .delay-5 {
+      animation-delay: 0.5s;
+    }
+
+    .delay-6 {
+      animation-delay: 0.6s;
+    }
+
+    /* Gallery mosaic tiles */
+    .gallery-tile {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .gallery-tile .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+    }
+
+    .gallery-tile:hover .overlay {
+      opacity: 1;
+    }
+
+    /* Pattern background */
+    .hero-pattern {
+      background-image: radial-gradient(circle at 20% 50%, rgba(245, 166, 35, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(26, 139, 127, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 60% 80%, rgba(245, 166, 35, 0.08) 0%, transparent 45%);
+    }
+
+    /* Nav active state */
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #F5A623;
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Scroll smooth */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Price card shine */
+    .price-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .price-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%);
+      transition: transform 0.6s;
+      transform: translateX(-100%);
+    }
+
+    .price-card:hover::before {
+      transform: translateX(100%);
+    }
+  </style>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+</head>
+
+<body class="h-full">
+  <div class="app-root font-body" style="background-color: #FFF8EC;"><!-- Navigation -->
+    <nav id="main-nav" class="sticky top-0 z-50 backdrop-blur-md border-b border-honey/20"
+      style="background: rgba(255,248,236,0.92);">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between"><a href="#hero"
+          class="flex items-center gap-2">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background: #1A8B7F;"><i
+              data-lucide="camera" style="width:22px;height:22px;color:#FFF8EC;"></i>
+          </div><span class="font-display font-bold text-lg" style="color: #2D2D2D;" id="nav-brand">Snap &amp;
+            Print</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6"><a href="#services" class="nav-link font-medium text-sm"
+            style="color:#2D2D2D;">Services</a> <a href="#gallery" class="nav-link font-medium text-sm"
+            style="color:#2D2D2D;">Gallery</a> <a href="#prices" class="nav-link font-medium text-sm"
+            style="color:#2D2D2D;">Prices</a> <a href="#contact"
+            class="nav-link font-medium text-sm px-4 py-2 rounded-full text-white" style="background:#F5A623;">Contact
+            Us</a>
+        </div><button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg" style="color:#2D2D2D;"
+          aria-label="Toggle menu"> <i data-lucide="menu" style="width:24px;height:24px;"></i> </button>
+      </div><!-- Mobile menu -->
+      <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 space-y-2"><a href="#services"
+          class="block py-2 px-3 rounded-lg font-medium text-sm" style="color:#2D2D2D;">Services</a> <a href="#gallery"
+          class="block py-2 px-3 rounded-lg font-medium text-sm" style="color:#2D2D2D;">Gallery</a> <a href="#prices"
+          class="block py-2 px-3 rounded-lg font-medium text-sm" style="color:#2D2D2D;">Prices</a> <a href="#contact"
+          class="block py-2 px-3 rounded-lg font-medium text-sm text-white text-center"
+          style="background:#F5A623;">Contact Us</a>
+      </div>
+    </nav><!-- Hero -->
+    <header id="hero" class="hero-pattern relative py-16 sm:py-24 lg:py-32">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+        <div class="flex-1 text-center lg:text-left">
+          <div class="anim-fade-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-6"
+            style="background:rgba(26,139,127,0.12);color:#1A8B7F;"><i data-lucide="sparkles"
+              style="width:14px;height:14px;"></i> Professional Digital Services
+          </div>
+          <h1 id="hero-title"
+            class="anim-fade-up delay-1 font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight"
+            style="color:#2D2D2D;">Snap &amp; Print<br>
+            Digital Solutions</h1>
+          <p id="hero-subtitle" class="anim-fade-up delay-2 mt-5 text-lg max-w-lg mx-auto lg:mx-0" style="color:#555;">
+            Your one-stop shop for ID photos, printing, tarpaulins, and document processing — fast, affordable, and
+            professional.</p>
+          <div class="anim-fade-up delay-3 mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"><a
+              href="#services"
+              class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-white transition-all hover:shadow-lg hover:scale-105"
+              style="background:#F5A623;"> <i data-lucide="arrow-right" style="width:18px;height:18px;"></i> Explore
+              Services </a> <a href="#prices"
+              class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold border-2 transition-all hover:shadow-lg"
+              style="color:#1A8B7F;border-color:#1A8B7F;"> View Prices </a>
+          </div>
+        </div><!-- Hero visual -->
+        <div class="anim-scale delay-3 flex-1 max-w-md w-full">
+          <div class="relative">
+            <div class="absolute -inset-4 rounded-3xl opacity-20 blur-2xl"
+              style="background: linear-gradient(135deg, #F5A623, #1A8B7F);"></div>
+            <div class="relative rounded-2xl p-6 shadow-xl" style="background:white;">
+              <div class="grid grid-cols-2 gap-3">
+                <div class="rounded-xl p-4 text-center" style="background:#FFF8EC;">
+                  <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-2"
+                    style="background:#F5A623;"><i data-lucide="user" style="width:24px;height:24px;color:white;"></i>
+                  </div>
+                  <p class="text-xs font-semibold" style="color:#2D2D2D;">ID Photos</p>
+                </div>
+                <div class="rounded-xl p-4 text-center" style="background:#E8F6F5;">
+                  <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-2"
+                    style="background:#1A8B7F;"><i data-lucide="printer"
+                      style="width:24px;height:24px;color:white;"></i>
+                  </div>
+                  <p class="text-xs font-semibold" style="color:#2D2D2D;">Printing</p>
+                </div>
+                <div class="rounded-xl p-4 text-center" style="background:#E8F6F5;">
+                  <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-2"
+                    style="background:#1A8B7F;"><i data-lucide="layout" style="width:24px;height:24px;color:white;"></i>
+                  </div>
+                  <p class="text-xs font-semibold" style="color:#2D2D2D;">Tarpaulins</p>
+                </div>
+                <div class="rounded-xl p-4 text-center" style="background:#FFF8EC;">
+                  <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-2"
+                    style="background:#F5A623;"><i data-lucide="file-text"
+                      style="width:24px;height:24px;color:white;"></i>
+                  </div>
+                  <p class="text-xs font-semibold" style="color:#2D2D2D;">Documents</p>
+                </div>
+              </div>
+              <div class="mt-4 p-3 rounded-xl flex items-center gap-3"
+                style="background:linear-gradient(135deg,#F5A623,#D4891A);"><i data-lucide="zap"
+                  style="width:20px;height:20px;color:white;"></i>
+                <div>
+                  <p class="text-white font-semibold text-sm">Quick Turnaround</p>
+                  <p class="text-white/80 text-xs">Most orders ready in 15 minutes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header><!-- Services -->
+    <section id="services" class="py-16 sm:py-20">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12"><span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase"
+            style="background:rgba(245,166,35,0.15);color:#D4891A;">What We Offer</span>
+          <h2 id="services-heading" class="font-display font-bold text-3xl sm:text-4xl mt-3" style="color:#2D2D2D;">Our
+            Services</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"><!-- Service cards -->
+          <div class="group rounded-2xl p-6 transition-all hover:shadow-xl hover:-translate-y-1"
+            style="background:white;border:1px solid rgba(245,166,35,0.15);">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-colors"
+              style="background:#FFF8EC;"><i data-lucide="camera" style="width:28px;height:28px;color:#F5A623;"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg mb-2" style="color:#2D2D2D;">ID Photos</h3>
+            <p class="text-sm leading-relaxed" style="color:#777;">Professional passport, visa, and government ID
+              photos. Instant capture with proper lighting and background.</p>
+            <ul class="mt-3 space-y-1">
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> 1x1, 2x2, Passport size</li>
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Instant printing</li>
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Digital copy included</li>
+            </ul>
+          </div>
+          <div class="group rounded-2xl p-6 transition-all hover:shadow-xl hover:-translate-y-1"
+            style="background:white;border:1px solid rgba(26,139,127,0.15);">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style="background:#E8F6F5;"><i
+                data-lucide="image" style="width:28px;height:28px;color:#1A8B7F;"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg mb-2" style="color:#2D2D2D;">Photo Printing</h3>
+            <p class="text-sm leading-relaxed" style="color:#777;">High-quality photo prints on glossy or matte paper.
+              From wallet-size to large format poster prints.</p>
+            <ul class="mt-3 space-y-1">
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Glossy &amp; matte finish</li>
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Wallet to A3 sizes</li>
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Vivid color accuracy</li>
+            </ul>
+          </div>
+          <div class="group rounded-2xl p-6 transition-all hover:shadow-xl hover:-translate-y-1"
+            style="background:white;border:1px solid rgba(245,166,35,0.15);">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style="background:#FFF8EC;"><i
+                data-lucide="layout" style="width:28px;height:28px;color:#F5A623;"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg mb-2" style="color:#2D2D2D;">Tarpaulin Layout</h3>
+            <p class="text-sm leading-relaxed" style="color:#777;">Custom tarpaulin designs for birthdays, fiestas,
+              business events, and announcements. Full design service.</p>
+            <ul class="mt-3 space-y-1">
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Custom design</li>
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Any size available</li>
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Same-day turnaround</li>
+            </ul>
+          </div>
+          <div class="group rounded-2xl p-6 transition-all hover:shadow-xl hover:-translate-y-1"
+            style="background:white;border:1px solid rgba(26,139,127,0.15);">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style="background:#E8F6F5;"><i
+                data-lucide="file-text" style="width:28px;height:28px;color:#1A8B7F;"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg mb-2" style="color:#2D2D2D;">Document Processing</h3>
+            <p class="text-sm leading-relaxed" style="color:#777;">Resume formatting, typing, scanning, encoding, and
+              photocopying services for all your document needs.</p>
+            <ul class="mt-3 space-y-1">
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Resume &amp; letters</li>
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Scan &amp; photocopy</li>
+              <li class="flex items-center gap-2 text-xs" style="color:#555;"><i data-lucide="check-circle"
+                  style="width:14px;height:14px;color:#1A8B7F;"></i> Encoding services</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- Price List -->
+    <section id="prices" class="py-16 sm:py-20">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12"><span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase"
+            style="background:rgba(245,166,35,0.15);color:#D4891A;">Affordable Rates</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl mt-3" style="color:#2D2D2D;">Price List</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"><!-- ID Photos -->
+          <div class="price-card rounded-2xl p-6 transition-all hover:shadow-xl" style="background:#1A8B7F;">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+              style="background:rgba(255,255,255,0.15);"><i data-lucide="camera"
+                style="width:24px;height:24px;color:white;"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-4">ID Photos</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">1x1 (8 pcs)</span><span class="font-bold text-white">₱35</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">2x2 (4 pcs)</span><span class="font-bold text-white">₱40</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">Passport (4 pcs)</span><span class="font-bold text-white">₱50</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">Soft copy add-on</span><span class="font-bold text-white">₱20</span>
+              </div>
+            </div>
+          </div><!-- Photo Printing -->
+          <div class="price-card rounded-2xl p-6 transition-all hover:shadow-xl" style="background:#F5A623;">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+              style="background:rgba(255,255,255,0.2);"><i data-lucide="image"
+                style="width:24px;height:24px;color:white;"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-4">Photo Printing</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">3R</span><span class="font-bold text-white">₱15</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">4R</span><span class="font-bold text-white">₱20</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">5R</span><span class="font-bold text-white">₱30</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">8R / A4</span><span class="font-bold text-white">₱50</span>
+              </div>
+            </div>
+          </div><!-- Tarpaulin -->
+          <div class="price-card rounded-2xl p-6 transition-all hover:shadow-xl" style="background:#1A8B7F;">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+              style="background:rgba(255,255,255,0.15);"><i data-lucide="layout"
+                style="width:24px;height:24px;color:white;"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-4">Tarpaulin</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">2x3 ft</span><span class="font-bold text-white">₱120</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">3x5 ft</span><span class="font-bold text-white">₱250</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">4x6 ft</span><span class="font-bold text-white">₱400</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">Layout only</span><span class="font-bold text-white">₱100</span>
+              </div>
+            </div>
+          </div><!-- Documents -->
+          <div class="price-card rounded-2xl p-6 transition-all hover:shadow-xl" style="background:#F5A623;">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+              style="background:rgba(255,255,255,0.2);"><i data-lucide="file-text"
+                style="width:24px;height:24px;color:white;"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-4">Documents</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">Typing / page</span><span class="font-bold text-white">₱15</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">Photocopy / page</span><span class="font-bold text-white">₱3</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">Scan / page</span><span class="font-bold text-white">₱10</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-white/80">Resume layout</span><span class="font-bold text-white">₱80</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- Contact -->
+    <section id="contact" class="py-16 sm:py-20" style="background:white;">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12"><span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase"
+            style="background:rgba(26,139,127,0.12);color:#1A8B7F;">Get In Touch</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl mt-3" style="color:#2D2D2D;">Contact Us</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8"><!-- Contact info -->
+          <div class="space-y-5">
+            <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#FFF8EC;">
+              <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style="background:#F5A623;"><i data-lucide="map-pin" style="width:20px;height:20px;color:white;"></i>
+              </div>
+              <div>
+                <p class="font-display font-semibold text-sm" style="color:#2D2D2D;">Visit Our Shop</p>
+                <p id="contact-address" class="text-sm mt-0.5" style="color:#777;">123 Main St, Barangay Central, Quezon
+                  City, Metro Manila</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#E8F6F5;">
+              <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style="background:#1A8B7F;"><i data-lucide="phone" style="width:20px;height:20px;color:white;"></i>
+              </div>
+              <div>
+                <p class="font-display font-semibold text-sm" style="color:#2D2D2D;">Call or Text</p>
+                <p id="contact-phone" class="text-sm mt-0.5" style="color:#777;">+63 912 345 6789</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#FFF8EC;">
+              <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style="background:#F5A623;"><i data-lucide="mail" style="width:20px;height:20px;color:white;"></i>
+              </div>
+              <div>
+                <p class="font-display font-semibold text-sm" style="color:#2D2D2D;">Email Us</p>
+                <p id="contact-email" class="text-sm mt-0.5" style="color:#777;">hello@snapandprint.ph</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#E8F6F5;">
+              <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style="background:#1A8B7F;"><i data-lucide="clock" style="width:20px;height:20px;color:white;"></i>
+              </div>
+              <div>
+                <p class="font-display font-semibold text-sm" style="color:#2D2D2D;">Business Hours</p>
+                <p class="text-sm mt-0.5" style="color:#777;">Mon–Sat: 8:00 AM – 8:00 PM<br>
+                  Sunday: 9:00 AM – 5:00 PM</p>
+              </div>
+            </div>
+          </div><!-- Contact form -->
+          <form id="contact-form" class="rounded-2xl p-6 sm:p-8 space-y-4"
+            style="background:#FFF8EC;border:1px solid rgba(245,166,35,0.15);">
+            <h3 class="font-display font-bold text-lg mb-2" style="color:#2D2D2D;">Send a Message</h3>
+            <div><label for="name" class="block text-sm font-medium mb-1" style="color:#555;">Your Name</label> <input
+                type="text" id="name" placeholder="Juan Dela Cruz"
+                class="w-full px-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2"
+                style="border-color:#ddd;background:white;forced-color-adjust:ring-color#1A8B7F;" required>
+            </div>
+            <div><label for="email" class="block text-sm font-medium mb-1" style="color:#555;">Email</label> <input
+                type="email" id="email" placeholder="juan@email.com"
+                class="w-full px-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2"
+                style="border-color:#ddd;background:white;" required>
+            </div>
+            <div><label for="service-select" class="block text-sm font-medium mb-1" style="color:#555;">Service
+                Needed</label> <select id="service-select"
+                class="w-full px-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2"
+                style="border-color:#ddd;background:white;">
+                <option>ID Photos</option>
+                <option>Photo Printing</option>
+                <option>Tarpaulin Layout</option>
+                <option>Document Processing</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div><label for="message" class="block text-sm font-medium mb-1" style="color:#555;">Message</label>
+              <textarea id="message" rows="3" placeholder="Tell us about your project..."
+                class="w-full px-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 resize-none"
+                style="border-color:#ddd;background:white;"></textarea>
+            </div><button type="submit"
+              class="w-full py-3 rounded-xl font-semibold text-white transition-all hover:shadow-lg hover:scale-[1.02] flex items-center justify-center gap-2"
+              style="background:#1A8B7F;"> <i data-lucide="send" style="width:16px;height:16px;"></i> Send Message
+            </button>
+            <div id="form-success" class="hidden text-center py-3 px-4 rounded-xl text-sm font-medium"
+              style="background:rgba(26,139,127,0.1);color:#1A8B7F;"><i data-lucide="check-circle"
+                style="width:16px;height:16px;display:inline;vertical-align:middle;"></i> Message sent! We'll get back
+              to you soon.
+            </div>
+          </form>
+        </div>
+      </div>
+    </section><!-- Footer -->
+    <footer class="py-8" style="background:#2D2D2D;">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+        <div class="flex items-center justify-center gap-2 mb-3">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#1A8B7F;"><i
+              data-lucide="camera" style="width:16px;height:16px;color:white;"></i>
+          </div><span class="font-display font-bold text-white">Snap &amp; Print Digital Solutions</span>
+        </div>
+        <p class="text-sm" style="color:rgba(255,255,255,0.5);">© 2026 Snap &amp; Print Digital Solutions. All rights
+          reserved.</p>
+      </div>
+    </footer>
+  </div>
+  <script>
+    // Default config
+    const defaultConfig = {
+      background_color: '#FFF8EC',
+      surface_color: '#FFFFFF',
+      text_color: '#2D2D2D',
+      primary_action_color: '#F5A623',
+      secondary_action_color: '#1A8B7F',
+      font_family: 'Outfit',
+      font_size: 16,
+      hero_title: 'Snap & Print\nDigital Solutions',
+      hero_subtitle: 'Your one-stop shop for ID photos, printing, tarpaulins, and document processing — fast, affordable, and professional.',
+      services_heading: 'Our Services',
+      contact_phone: '+63 912 345 6789',
+      contact_email: 'hello@snapandprint.ph',
+      contact_address: '123 Main St, Barangay Central, Quezon City, Metro Manila'
+    };
+
+    async function onConfigChange(config) {
+      const bg = config.background_color || defaultConfig.background_color;
+      const surface = config.surface_color || defaultConfig.surface_color;
+      const text = config.text_color || defaultConfig.text_color;
+      const primary = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondary = config.secondary_action_color || defaultConfig.secondary_action_color;
+      const font = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+
+      // Background
+      document.querySelector('.app-root').style.backgroundColor = bg;
+      // Surface sections
+      document.getElementById('gallery').style.backgroundColor = surface;
+      document.getElementById('contact').style.backgroundColor = surface;
+
+      // Text color on headings
+      document.querySelectorAll('.font-display').forEach(el => {
+        if (!el.closest('[style*="background:#1A8B7F"]') && !el.closest('[style*="background:#F5A623"]') && !el.closest('footer')) {
+          el.style.color = text;
+        }
+      });
+
+      // Primary action buttons
+      document.querySelectorAll('[style*="background:#F5A623"]').forEach(el => {
+        el.style.background = primary;
+      });
+      // Secondary action
+      document.querySelectorAll('[style*="background:#1A8B7F"]').forEach(el => {
+        if (!el.closest('.price-card')) el.style.background = secondary;
+      });
+
+      // Font
+      const fontStack = `${font}, DM Sans, sans-serif`;
+      document.querySelectorAll('.font-display').forEach(el => el.style.fontFamily = fontStack);
+      document.querySelector('.app-root').style.fontFamily = `DM Sans, ${font}, sans-serif`;
+
+      // Font size
+      const heroTitle = document.getElementById('hero-title');
+      if (heroTitle) {
+        heroTitle.style.fontSize = `${baseSize * 3}px`;
+        heroTitle.innerHTML = (config.hero_title || defaultConfig.hero_title).replace(/\n/g, '<br>');
+      }
+      const heroSub = document.getElementById('hero-subtitle');
+      if (heroSub) {
+        heroSub.style.fontSize = `${baseSize * 1.125}px`;
+        heroSub.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+      }
+      const servH = document.getElementById('services-heading');
+      if (servH) {
+        servH.style.fontSize = `${baseSize * 2.25}px`;
+        servH.textContent = config.services_heading || defaultConfig.services_heading;
+      }
+
+      // Contact info
+      const cp = document.getElementById('contact-phone');
+      if (cp) cp.textContent = config.contact_phone || defaultConfig.contact_phone;
+      const ce = document.getElementById('contact-email');
+      if (ce) ce.textContent = config.contact_email || defaultConfig.contact_email;
+      const ca = document.getElementById('contact-address');
+      if (ca) ca.textContent = config.contact_address || defaultConfig.contact_address;
+    }
+
+    // Element SDK init
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+            { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+            { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+            { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+            { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } },
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['hero_title', config.hero_title || defaultConfig.hero_title],
+          ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle],
+          ['services_heading', config.services_heading || defaultConfig.services_heading],
+          ['contact_phone', config.contact_phone || defaultConfig.contact_phone],
+          ['contact_email', config.contact_email || defaultConfig.contact_email],
+          ['contact_address', config.contact_address || defaultConfig.contact_address],
+        ])
+      });
+    }
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    });
+    // Close mobile menu on link click
+    document.querySelectorAll('#mobile-menu a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden'));
+    });
+
+    // Contact form
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('form-success').classList.remove('hidden');
+      e.target.reset();
+      setTimeout(() => document.getElementById('form-success').classList.add('hidden'), 4000);
+      lucide.createIcons();
+    });
+
+    // Init icons
+    lucide.createIcons();
+
+    // Scroll-triggered animations via Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('anim-fade-up');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('#services .group, .price-card, .gallery-tile').forEach(el => observer.observe(el));
+  </script>
+  <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9eba0934d6f01f2b',t:'MTc3NjA3ODc0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>

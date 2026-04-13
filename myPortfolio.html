@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Student web developer building modern, responsive websites.">
+  <title>Student Web Developer</title>
+  <style>
+    :root {
+      --navy-950: #07111f;
+      --navy-900: #0b1b33;
+      --navy-800: #13294b;
+      --navy-700: #1c3b66;
+      --orange-500: #ff8a1f;
+      --orange-400: #ffab4d;
+      --orange-300: #ffc97a;
+      --ice-100: #eef4ff;
+      --ice-200: #c8d7ef;
+      --card: rgba(11, 27, 51, 0.72);
+      --card-border: rgba(255, 171, 77, 0.24);
+      --shadow: 0 18px 45px rgba(2, 10, 22, 0.34);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--ice-100);
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at top left, rgba(255, 138, 31, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(33, 85, 163, 0.32), transparent 24%),
+        linear-gradient(160deg, var(--navy-950), var(--navy-900) 48%, #10213c);
+      min-height: 100vh;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page-shell {
+      width: min(calc(100% - 2rem), var(--max-width));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 17, 31, 0.78);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .site-nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--orange-500), #ff6b1a);
+      color: var(--navy-950);
+      box-shadow: 0 10px 25px rgba(255, 138, 31, 0.25);
+    }
+
+    .brand-text {
+      color: var(--ice-100);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--ice-100);
+      cursor: pointer;
+    }
+
+    .menu-toggle span,
+    .menu-toggle::before,
+    .menu-toggle::after {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 2px;
+      margin: 0 auto;
+      background: currentColor;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .menu-toggle span {
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
+    .menu-toggle[aria-expanded="true"]::before {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"]::after {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] span {
+      opacity: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      color: var(--ice-200);
+      transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible,
+    .nav-links a.active {
+      background: rgba(255, 138, 31, 0.14);
+      color: #fff;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .hero {
+      padding: 4.5rem 0 2.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero-copy {
+      padding: 2rem 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0.95rem;
+      margin-bottom: 1.2rem;
+      border-radius: 999px;
+      color: var(--orange-300);
+      background: rgba(255, 138, 31, 0.12);
+      border: 1px solid rgba(255, 138, 31, 0.18);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+      max-width: 10ch;
+    }
+
+    .hero h1 span {
+      color: var(--orange-400);
+    }
+
+    .hero p {
+      font-size: 1.08rem;
+      color: var(--ice-200);
+      max-width: 58ch;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      min-height: 48px;
+      padding: 0.9rem 1.3rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      color: var(--navy-950);
+      background: linear-gradient(135deg, var(--orange-400), var(--orange-500));
+      box-shadow: 0 14px 28px rgba(255, 138, 31, 0.22);
+    }
+
+    .btn-secondary {
+      color: var(--ice-100);
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      outline: none;
+    }
+
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .stat {
+      padding: 1rem 1.1rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.5rem;
+      color: var(--orange-300);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .portrait-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      padding: 1.2rem;
+      background: linear-gradient(180deg, rgba(19, 41, 75, 0.92), rgba(7, 17, 31, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .portrait-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -20% -30% auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 138, 31, 0.26), transparent 70%);
+      pointer-events: none;
+    }
+
+    .profile-frame {
+      aspect-ratio: 4 / 5;
+      border-radius: calc(var(--radius-lg) - 8px);
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      margin-bottom: 1rem;
+    }
+
+    .profile-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .portrait-card:hover .profile-frame img {
+      transform: scale(1.04);
+    }
+
+    .availability {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .availability-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--orange-300);
+      font-weight: 700;
+    }
+
+    .availability-badge::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #38d39f;
+      box-shadow: 0 0 0 6px rgba(56, 211, 159, 0.14);
+    }
+
+    section {
+      padding: 2.5rem 0;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: end;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-heading p {
+      max-width: 54ch;
+      color: var(--ice-200);
+    }
+
+    .highlight-grid,
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    .info-card,
+    .project-card,
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .info-card {
+      padding: 1.4rem;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 171, 77, 0.44);
+    }
+
+    .card-label {
+      display: inline-block;
+      margin-bottom: 0.8rem;
+      color: var(--orange-300);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
+    .chip {
+      padding: 0.55rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--ice-100);
+      font-size: 0.92rem;
+    }
+
+    .project-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .filter-btn {
+      padding: 0.75rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--ice-100);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn:focus-visible,
+    .filter-btn.is-active {
+      background: rgba(255, 138, 31, 0.14);
+      border-color: rgba(255, 171, 77, 0.42);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .project-card {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 171, 77, 0.44);
+    }
+
+    .project-card.hidden {
+      display: none;
+    }
+
+    .project-preview {
+      position: relative;
+      min-height: 210px;
+      border-radius: 18px;
+      overflow: hidden;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+    }
+
+    .project-preview::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -30% auto;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 171, 77, 0.22), transparent 70%);
+    }
+
+    .project-preview.business {
+      background:
+        linear-gradient(160deg, rgba(8, 27, 52, 0.96), rgba(16, 45, 86, 0.85)),
+        linear-gradient(135deg, rgba(255, 138, 31, 0.18), transparent 50%);
+    }
+
+    .project-preview.portfolio {
+      background:
+        linear-gradient(160deg, rgba(17, 34, 63, 0.96), rgba(10, 23, 46, 0.9)),
+        radial-gradient(circle at top right, rgba(255, 138, 31, 0.22), transparent 32%);
+    }
+
+    .project-preview.landing {
+      background:
+        linear-gradient(160deg, rgba(18, 36, 64, 0.96), rgba(11, 22, 42, 0.9)),
+        radial-gradient(circle at top left, rgba(255, 138, 31, 0.22), transparent 30%);
+    }
+
+    .preview-window {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: grid;
+      gap: 0.85rem;
+      padding: 0.9rem;
+      border-radius: 16px;
+      background: rgba(5, 12, 24, 0.34);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+    }
+
+    .window-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .window-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.32);
+    }
+
+    .window-dots span:nth-child(1) {
+      background: #ff7a59;
+    }
+
+    .window-dots span:nth-child(2) {
+      background: #ffb347;
+    }
+
+    .window-dots span:nth-child(3) {
+      background: #49dcb1;
+    }
+
+    .window-pill {
+      min-width: 84px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .preview-hero {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .preview-line {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .preview-line.short {
+      width: 42%;
+    }
+
+    .preview-line.medium {
+      width: 66%;
+    }
+
+    .preview-line.long {
+      width: 88%;
+    }
+
+    .preview-panels {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 0.7rem;
+      align-items: stretch;
+      min-height: 88px;
+    }
+
+    .preview-panel,
+    .preview-stack span,
+    .preview-card-mini {
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .preview-panel {
+      min-height: 88px;
+      background: linear-gradient(135deg, rgba(255, 171, 77, 0.26), rgba(255, 255, 255, 0.06));
+    }
+
+    .preview-stack {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .preview-stack span {
+      min-height: 40px;
+    }
+
+    .preview-card-mini {
+      min-height: 68px;
+    }
+
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: start;
+      padding: 0 0.5rem;
+    }
+
+    .project-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255, 138, 31, 0.14);
+      color: var(--orange-300);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .project-copy {
+      padding: 0 0.5rem;
+      color: var(--ice-200);
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      padding: 0 0.5rem;
+    }
+
+    .meta-chip {
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--ice-100);
+      font-size: 0.86rem;
+    }
+
+    .project-link {
+      margin-top: auto;
+      padding: 0 0.5rem 0.5rem;
+      color: var(--orange-300);
+      font-weight: 700;
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 1.2rem;
+    }
+
+    .contact-card {
+      padding: 1.6rem;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1.2rem;
+    }
+
+    .contact-item {
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .contact-item small {
+      display: block;
+      color: var(--orange-300);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.35rem;
+    }
+
+    .contact-panel {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .contact-panel label {
+      display: grid;
+      gap: 0.45rem;
+      font-weight: 600;
+      color: var(--ice-100);
+    }
+
+    .contact-panel input,
+    .contact-panel textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 0.95rem 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--ice-100);
+      font: inherit;
+      resize: vertical;
+    }
+
+    .contact-panel input:focus,
+    .contact-panel textarea:focus {
+      outline: 2px solid rgba(255, 171, 77, 0.3);
+      border-color: rgba(255, 171, 77, 0.4);
+    }
+
+    .note {
+      color: var(--ice-200);
+      font-size: 0.94rem;
+    }
+
+    footer {
+      padding: 1.4rem 0 2.5rem;
+      color: var(--ice-200);
+      text-align: center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+
+      .hero-grid,
+      .contact-wrap,
+      .highlight-grid,
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 3rem;
+      }
+
+      .hero-copy {
+        padding-top: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .menu-toggle {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 78px;
+        left: 1rem;
+        right: 1rem;
+        display: grid;
+        gap: 0.4rem;
+        padding: 1rem;
+        border-radius: 20px;
+        background: rgba(7, 17, 31, 0.96);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: var(--shadow);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .quick-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions,
+      .project-filter {
+        flex-direction: column;
+      }
+
+      .btn,
+      .filter-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="page-shell site-nav">
+      <a class="brand" href="#top">
+        <span class="brand-mark">J</span>
+        <span class="brand-text">Student.dev</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <span></span>
+      </button>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="page-shell hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Student Developer � Responsive Sites � Clean UI</p>
+          <h1>Building <span>bold</span> websites with structure and style.</h1>
+          <p id="about">
+            A student web developer, and also a highschool student. I design modern, mobile-friendly pages with strong
+            layout, clear hierarchy, and a polished user experience.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">View My Work</a>
+            <a class="btn btn-secondary" href="#contact">Let's Connect</a>
+          </div>
+          <div class="quick-stats">
+            <div class="stat">
+              <strong>3+</strong>
+              <span>Portfolio-ready projects</span>
+            </div>
+            <div class="stat">
+              <strong>100%</strong>
+              <span>Responsive-first layouts</span>
+            </div>
+            <div class="stat">
+              <strong>24/7</strong>
+              <span>Driven to improve my craft</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="portrait-card">
+            <div class="profile-frame">
+              <img src="Untitled design.png" width="1000" height="1000">
+            </div>
+            <div class="availability">
+              <div>
+                <strong>Ready for school and freelance projects</strong>
+                <p class="note">Focused on landing pages, portfolios, and student-friendly websites.</p>
+              </div>
+              <span class="availability-badge">Available</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="page-shell">
+        <div class="section-heading reveal">
+          <div>
+            <h2>What I Bring</h2>
+          </div>
+          <p>I combine clean structure, visual contrast, and responsive layout techniques to make websites feel sharp on
+            desktop and smooth on mobile.</p>
+        </div>
+        <div class="highlight-grid">
+          <article class="info-card reveal">
+            <span class="card-label">Front-End Focus</span>
+            <h3>Built for clarity</h3>
+            <p>I build pages with readable content flow, strong section spacing, and interfaces that stay easy to use
+              across screen sizes.</p>
+          </article>
+          <article class="info-card reveal">
+            <span class="card-label">Visual Style</span>
+            <h3>Modern and energetic</h3>
+            <p>My layouts use contrast, depth, and motion to create a polished look without making the site feel heavy
+              or confusing.</p>
+          </article>
+          <article class="info-card reveal">
+            <span class="card-label">Core Skills</span>
+            <h3>HTML � CSS � Responsive Design</h3>
+            <p>I enjoy turning simple ideas into usable websites that look clean, feel consistent, and work well on
+              phones.</p>
+            <div class="skills-row">
+              <span class="chip">Semantic HTML</span>
+              <span class="chip">CSS Layout</span>
+              <span class="chip">Flexbox</span>
+              <span class="chip">Grid</span>
+              <span class="chip">Mobile UI</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="page-shell">
+        <div class="section-heading reveal">
+          <div>
+            <h2>Featured Projects</h2>
+          </div>
+          <p>Use the filters to explore different project types. The cards respond instantly so the section feels more
+            interactive than a static gallery.</p>
+        </div>
+
+        <div class="project-filter reveal" aria-label="Project categories">
+          <button class="filter-btn" type="button" data-filter="business">Tech or Digital Business</button>
+          <button class="filter-btn" type="button" data-filter="portfolio">Restaurant Website</button>
+          <button class="filter-btn" type="button" data-filter="landing">Burger Website</button>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card reveal" data-category="business">
+            <div class="project-preview business" aria-hidden="true">
+              <div class="preview-window">
+                <div class="window-bar">
+                  <div class="window-dots"><span></span><span></span><span></span></div>
+                  <div class="window-pill"></div>
+                </div>
+                <div class="preview-hero">
+                  <span class="preview-line short"></span>
+                  <span class="preview-line long"></span>
+                  <span class="preview-line medium"></span>
+                </div>
+                <div class="preview-panels">
+                  <div class="preview-panel"></div>
+                  <div class="preview-stack"><span></span><span></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="project-top">
+              <div>
+                <span class="project-tag">Business</span>
+                <h3>Snap Print Digital Solutions</h3>
+              </div>
+            </div>
+            <p class="project-copy">The website of Snap & Print Digital Solutions showcases a modern print shop in
+              Quezon City, Philippines. It offers ID photos, printing, tarpaulin layouts, and document processing. The
+              site highlights prices, portfolio, and contact details for quick service inquiries.</p>
+            <a class="project-link" href="computer-hub-demo.html">Click me to see an example</a>
+          </article>
+
+          <article class="project-card reveal" data-category="portfolio">
+            <div class="project-preview portfolio" aria-hidden="true">
+              <div class="preview-window">
+                <div class="window-bar">
+                  <div class="window-dots"><span></span><span></span><span></span></div>
+                  <div class="window-pill"></div>
+                </div>
+                <div class="preview-hero">
+                  <span class="preview-line short"></span>
+                  <span class="preview-line long"></span>
+                  <span class="preview-line medium"></span>
+                </div>
+                <div class="preview-panels">
+                  <div class="preview-card-mini"></div>
+                  <div class="preview-stack"><span></span><span></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="project-top">
+              <div>
+                <span class="project-tag">Restaurant Website</span>
+                <h3>Cuisine</h3>
+              </div>
+            </div>
+            <p class="project-copy">This website presents Kusina ni Lola, a cozy Filipino restaurant that highlights
+              home-style dishes inspired by a grandmother's cooking and family traditions. It showcases their story,
+              signature menu items, glowing customer testimonials, and practical details like location, hours, and
+              contact information. Visitors can also request table reservations directly through an elegant, built-in
+              booking form.</p>
+            <div class="project-meta">
+            </div>
+            <a class="project-link" href="Cuisine.html">Click me to see an example</a>
+          </article>
+
+          <article class="project-card reveal" data-category="landing">
+            <div class="project-preview landing" aria-hidden="true">
+              <div class="preview-window">
+                <div class="window-bar">
+                  <div class="window-dots"><span></span><span></span><span></span></div>
+                  <div class="window-pill"></div>
+                </div>
+                <div class="preview-hero">
+                  <span class="preview-line short"></span>
+                  <span class="preview-line long"></span>
+                  <span class="preview-line medium"></span>
+                </div>
+                <div class="preview-panels">
+                  <div class="preview-panel"></div>
+                  <div class="preview-card-mini"></div>
+                </div>
+              </div>
+            </div>
+            <div class="project-top">
+              <div>
+                <span class="project-tag">Food Hub</span>
+                <h3>Big Bite Burgers</h3>
+              </div>
+            </div>
+            <p class="project-copy">At Big Bite Burgers, we don't just make burgers—we engineer smash burger perfection.
+              Every patty is pressed onto a screaming hot griddle, creating crispy edges and juicy centers that'll
+              change your life.
+
+              Founded in 2019 by BurgerObsessive, we've perfected the art of simplicity. Premium beef. Fresh toppings.
+              House-made sauces. No nonsense. Just pure, unapologetic burger bliss.</p>
+            <a class="project-link" href="Big Bite Burgers.html">Click me to see an example</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="page-shell contact-wrap">
+        <div class="contact-card reveal">
+          <span class="card-label">Contact</span>
+          <h2>Let's build something useful.</h2>
+          <p class="note">If you need a portfolio, landing page, or school project website, send a message and I can
+            help shape the design.</p>
+          <div class="contact-item">
+            <small>Focus</small>
+            <span>Portfolios, Business websites, and other kinds of websites.</span>
+          </div>
+          <div class="contact-item">
+            <small>Location</small>
+            <span>Philippines</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-card reveal">
+        <span class="card-label">Quick Message</span>
+        <form class="contact-panel">
+          <label for="name">Your Name
+            <input id="name" name="name" type="text" placeholder="Enter your name">
+          </label>
+          <label for="email">Email Address
+            <input id="email" name="email" type="email" placeholder="Enter your email">
+          </label>
+          <label for="message">Project Details
+            <textarea id="message" name="message" rows="5"
+              placeholder="Tell me what kind of website you need"></textarea>
+          </label>
+          <a class="btn btn-primary" href="">Send via Email</a>
+        </form>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell">
+      <p>&copy; 2026 Student Web Developer</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    const navAnchors = document.querySelectorAll(".nav-links a");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const projectCards = document.querySelectorAll(".project-card");
+    const revealItems = document.querySelectorAll(".reveal");
+    const sections = document.querySelectorAll("main section[id]");
+
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener("click", () => {
+        const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!expanded));
+        navLinks.classList.toggle("open");
+        document.body.classList.toggle("menu-open");
+      });
+
+      navAnchors.forEach((anchor) => {
+        anchor.addEventListener("click", () => {
+          menuToggle.setAttribute("aria-expanded", "false");
+          navLinks.classList.remove("open");
+          document.body.classList.remove("menu-open");
+        });
+      });
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selected = button.dataset.filter;
+
+        filterButtons.forEach((item) => item.classList.remove("is-active"));
+        button.classList.add("is-active");
+
+        projectCards.forEach((card) => {
+          const matches = selected === "all" || card.dataset.category === selected;
+          card.classList.toggle("hidden", !matches);
+        });
+      });
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+
+    revealItems.forEach((item) => revealObserver.observe(item));
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.getAttribute("id");
+        const matchingLink = document.querySelector('.nav-links a[href="#' + id + '"]');
+
+        if (entry.isIntersecting && matchingLink) {
+          navAnchors.forEach((link) => link.classList.remove("active"));
+          matchingLink.classList.add("active");
+        }
+      });
+    }, {
+      rootMargin: "-45% 0px -45% 0px",
+      threshold: 0
+    });
+
+    sections.forEach((section) => navObserver.observe(section));
+  </script>
+</body>
+
+</html>

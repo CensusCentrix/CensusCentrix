@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Big Bite Burgers</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Space+Mono:wght@400;700&amp;display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Archivo Black"', 'sans-serif'],
+            mono: ['"Space Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .flame-glow {
+      text-shadow: 0 0 40px rgba(255, 165, 0, 0.4), 0 0 80px rgba(255, 165, 0, 0.1);
+    }
+
+    .card-hover {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-8px) rotate(-1deg);
+      box-shadow: 0 20px 60px rgba(255, 165, 0, 0.2);
+    }
+
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: #f59e0b;
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .pulse-badge {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 20px 10px rgba(245, 158, 11, 0.1);
+      }
+    }
+
+    .stagger-1 {
+      animation: fadeUp 0.6s 0.1s both;
+    }
+
+    .stagger-2 {
+      animation: fadeUp 0.6s 0.2s both;
+    }
+
+    .stagger-3 {
+      animation: fadeUp 0.6s 0.3s both;
+    }
+
+    .stagger-4 {
+      animation: fadeUp 0.6s 0.4s both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .burger-spin:hover svg {
+      animation: wiggle 0.5s ease-in-out;
+    }
+
+    @keyframes wiggle {
+
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      25% {
+        transform: rotate(-8deg)
+      }
+
+      75% {
+        transform: rotate(8deg)
+      }
+    }
+
+    .stripe-bg {
+      background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(245, 158, 11, 0.03) 10px, rgba(245, 158, 11, 0.03) 20px);
+    }
+
+    .promo-card {
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .promo-card:hover {
+      transform: scale(1.03);
+      border-color: #f59e0b;
+    }
+  </style>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+</head>
+
+<body class="h-full overflow-auto" style="background-color:#0f0f0f; color:#f5f5f5;">
+  <div class="w-full h-full stripe-bg" id="app-wrapper"><!-- NAV -->
+    <nav class="fixed top-0 left-0 w-full z-50 backdrop-blur-md border-b border-amber-500/10"
+      style="background:rgba(15,15,15,0.9);">
+      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"><a href="#home"
+          class="font-display text-xl tracking-tight" style="color:#f59e0b;">BIG BITE 🍔</a> <button id="mobile-toggle"
+          class="md:hidden" style="color:#f59e0b;"><i data-lucide="menu" style="width:28px;height:28px;"></i></button>
+        <div class="hidden md:flex gap-8 font-mono text-sm tracking-wider" id="nav-links"><a href="#home"
+            class="nav-link hover:text-amber-400 transition-colors">HOME</a> <a href="#menu"
+            class="nav-link hover:text-amber-400 transition-colors">MENU</a> <a href="#bestsellers"
+            class="nav-link hover:text-amber-400 transition-colors">BEST SELLERS</a> <a href="#promos"
+            class="nav-link hover:text-amber-400 transition-colors">PROMOS</a> <a href="#contact"
+            class="nav-link hover:text-amber-400 transition-colors">CONTACT</a>
+        </div>
+      </div>
+      <div class="hidden md:hidden flex-col gap-4 px-6 pb-4 font-mono text-sm" id="mobile-menu"><a href="#home"
+          class="hover:text-amber-400 py-2">HOME</a> <a href="#menu" class="hover:text-amber-400 py-2">MENU</a> <a
+          href="#bestsellers" class="hover:text-amber-400 py-2">BEST SELLERS</a> <a href="#promos"
+          class="hover:text-amber-400 py-2">PROMOS</a> <a href="#contact" class="hover:text-amber-400 py-2">CONTACT</a>
+      </div>
+    </nav><!-- HERO -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative px-6 pt-20"
+      style="background: radial-gradient(ellipse at 50% 80%, rgba(245,158,11,0.08) 0%, transparent 60%);">
+      <div class="text-center max-w-3xl">
+        <div class="stagger-1 text-7xl sm:text-8xl md:text-9xl mb-6">
+          🍔
+        </div>
+        <h1 id="hero-title"
+          class="stagger-2 font-display text-5xl sm:text-6xl md:text-8xl tracking-tight flame-glow leading-none"
+          style="color:#f59e0b;">BIG BITE BURGERS</h1>
+        <p id="hero-subtitle" class="stagger-3 font-mono text-base sm:text-lg mt-6 tracking-wider"
+          style="color:#a3a3a3;">Smashed to perfection since 2019</p><a href="#menu"
+          class="stagger-4 inline-flex items-center gap-2 mt-10 px-8 py-4 font-mono font-bold text-sm tracking-widest border-2 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-amber-500/20"
+          style="color:#0f0f0f; background:#f59e0b; border-color:#f59e0b;"> VIEW MENU <i data-lucide="arrow-down"
+            style="width:16px;height:16px;"></i> </a>
+      </div>
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce" style="color:#525252;"><i
+          data-lucide="chevron-down" style="width:24px;height:24px;"></i>
+      </div>
+    </section><!-- MENU -->
+    <section id="menu" class="py-24 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h2 id="menu-heading" class="scroll-reveal font-display text-4xl md:text-5xl text-center mb-4"
+          style="color:#f59e0b;">OUR MENU</h2>
+        <p class="scroll-reveal font-mono text-center mb-16" style="color:#737373;">Fresh ingredients • Smashed daily •
+          Made with love</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="menu-grid"><!-- Burgers -->
+          <div class="scroll-reveal">
+            <div class="text-center mb-6">
+              <span class="text-4xl">🍔</span>
+              <h3 class="font-display text-xl mt-2" style="color:#f59e0b;">BURGERS</h3>
+            </div>
+            <div class="space-y-3 font-mono text-sm">
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Classic Smash</span><br><span
+                    style="color:#737373;">Beef, cheese, pickles, sauce</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$8.99</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Double Trouble</span><br><span
+                    style="color:#737373;">Double beef, double cheese</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$12.49</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">BBQ Beast</span><br><span style="color:#737373;">Bacon,
+                    onion rings, BBQ</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$13.99</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Spicy Diablo</span><br><span
+                    style="color:#737373;">Jalapeños, habanero sauce</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$11.99</span>
+              </div>
+            </div>
+          </div><!-- Fries -->
+          <div class="scroll-reveal">
+            <div class="text-center mb-6">
+              <span class="text-4xl">🍟</span>
+              <h3 class="font-display text-xl mt-2" style="color:#f59e0b;">FRIES</h3>
+            </div>
+            <div class="space-y-3 font-mono text-sm">
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Classic Fries</span><br><span
+                    style="color:#737373;">Sea salt, crispy golden</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$4.49</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Loaded Fries</span><br><span
+                    style="color:#737373;">Cheese, bacon, jalapeños</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$7.99</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Truffle Fries</span><br><span
+                    style="color:#737373;">Truffle oil, parmesan</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$8.99</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Sweet Potato</span><br><span
+                    style="color:#737373;">Cinnamon sugar drizzle</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$5.99</span>
+              </div>
+            </div>
+          </div><!-- Shakes -->
+          <div class="scroll-reveal">
+            <div class="text-center mb-6">
+              <span class="text-4xl">🥤</span>
+              <h3 class="font-display text-xl mt-2" style="color:#f59e0b;">MILKSHAKES</h3>
+            </div>
+            <div class="space-y-3 font-mono text-sm">
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Vanilla Dream</span><br><span
+                    style="color:#737373;">Madagascar vanilla bean</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$6.49</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Choco Overload</span><br><span
+                    style="color:#737373;">Triple chocolate, whipped cream</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$7.49</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Strawberry Bliss</span><br><span
+                    style="color:#737373;">Fresh strawberries, cream</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$6.99</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 rounded-lg border transition-colors hover:border-amber-500/50"
+                style="border-color:#262626; background:#171717;">
+                <div>
+                  <span class="font-bold" style="color:#f5f5f5;">Oreo Crunch</span><br><span
+                    style="color:#737373;">Crushed Oreos, vanilla</span>
+                </div><span class="font-bold" style="color:#f59e0b;">$7.49</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- BEST SELLERS -->
+    <section id="bestsellers" class="py-24 px-6"
+      style="background:linear-gradient(180deg, rgba(245,158,11,0.05) 0%, transparent 100%);">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="scroll-reveal font-display text-4xl md:text-5xl text-center mb-4" style="color:#f59e0b;">BEST SELLERS
+        </h2>
+        <p class="scroll-reveal font-mono text-center mb-16" style="color:#737373;">The crowd favorites you can't miss
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div class="scroll-reveal card-hover rounded-2xl p-6 text-center border"
+            style="background:#171717; border-color:#262626;">
+            <div
+              class="pulse-badge inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono font-bold mb-4"
+              style="background:rgba(245,158,11,0.15); color:#f59e0b;">
+              #1 SELLER
+            </div>
+            <div class="text-6xl mb-4">
+              🍔
+            </div>
+            <h3 class="font-display text-xl mb-2" style="color:#f5f5f5;">Double Trouble</h3>
+            <p class="font-mono text-sm mb-4" style="color:#737373;">Two smashed patties, American cheese, house sauce,
+              toasted brioche</p>
+            <div class="flex items-center justify-center gap-1 mb-3" style="color:#f59e0b;">
+              ⭐⭐⭐⭐⭐ <span class="font-mono text-xs" style="color:#737373;">4.9</span>
+            </div><span class="font-display text-2xl" style="color:#f59e0b;">$12.49</span>
+          </div>
+          <div class="scroll-reveal card-hover rounded-2xl p-6 text-center border"
+            style="background:#171717; border-color:#262626;">
+            <div
+              class="pulse-badge inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono font-bold mb-4"
+              style="background:rgba(249,115,22,0.15); color:#f97316;">
+              FAN FAVE
+            </div>
+            <div class="text-6xl mb-4">
+              🍟
+            </div>
+            <h3 class="font-display text-xl mb-2" style="color:#f5f5f5;">Loaded Fries</h3>
+            <p class="font-mono text-sm mb-4" style="color:#737373;">Crispy fries loaded with cheese, bacon bits, and
+              jalapeño slices</p>
+            <div class="flex items-center justify-center gap-1 mb-3" style="color:#f59e0b;">
+              ⭐⭐⭐⭐⭐ <span class="font-mono text-xs" style="color:#737373;">4.8</span>
+            </div><span class="font-display text-2xl" style="color:#f97316;">$7.99</span>
+          </div>
+          <div class="scroll-reveal card-hover rounded-2xl p-6 text-center border"
+            style="background:#171717; border-color:#262626;">
+            <div
+              class="pulse-badge inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono font-bold mb-4"
+              style="background:rgba(245,158,11,0.15); color:#f59e0b;">
+              MUST TRY
+            </div>
+            <div class="text-6xl mb-4">
+              🥤
+            </div>
+            <h3 class="font-display text-xl mb-2" style="color:#f5f5f5;">Choco Overload</h3>
+            <p class="font-mono text-sm mb-4" style="color:#737373;">Triple chocolate milkshake with whipped cream and
+              cookie crumble</p>
+            <div class="flex items-center justify-center gap-1 mb-3" style="color:#f59e0b;">
+              ⭐⭐⭐⭐⭐ <span class="font-mono text-xs" style="color:#737373;">4.9</span>
+            </div><span class="font-display text-2xl" style="color:#f59e0b;">$7.49</span>
+          </div>
+        </div>
+      </div>
+    </section><!-- PROMOS -->
+    <section id="promos" class="py-24 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h2 id="promo-heading" class="scroll-reveal font-display text-4xl md:text-5xl text-center mb-4"
+          style="color:#f59e0b;">HOT DEALS</h2>
+        <p class="scroll-reveal font-mono text-center mb-16" style="color:#737373;">Limited time offers you don't want
+          to miss</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="scroll-reveal promo-card rounded-2xl p-8 border-2 relative overflow-hidden"
+            style="background:#171717; border-color:#262626;">
+            <div class="absolute top-0 right-0 px-4 py-2 font-mono font-bold text-xs rounded-bl-xl"
+              style="background:#f59e0b; color:#0f0f0f;">
+              SAVE 25%
+            </div><span class="text-5xl">🔥</span>
+            <h3 class="font-display text-2xl mt-4 mb-2" style="color:#f5f5f5;">TACO TUESDAY... BUT BURGERS</h3>
+            <p class="font-mono text-sm mb-4" style="color:#a3a3a3;">Every Tuesday: any burger + fries + drink for just
+              <strong style="color:#f59e0b;">$14.99</strong>. That's a steal.
+            </p><span class="inline-block font-mono text-xs px-3 py-1 rounded-full"
+              style="background:rgba(245,158,11,0.1); color:#f59e0b;">Every Tuesday</span>
+          </div>
+          <div class="scroll-reveal promo-card rounded-2xl p-8 border-2 relative overflow-hidden"
+            style="background:#171717; border-color:#262626;">
+            <div class="absolute top-0 right-0 px-4 py-2 font-mono font-bold text-xs rounded-bl-xl"
+              style="background:#f97316; color:#0f0f0f;">
+              NEW
+            </div><span class="text-5xl">👨‍👩‍👧‍👦</span>
+            <h3 class="font-display text-2xl mt-4 mb-2" style="color:#f5f5f5;">FAMILY FEAST</h3>
+            <p class="font-mono text-sm mb-4" style="color:#a3a3a3;">4 burgers + 2 large fries + 4 drinks for <strong
+                style="color:#f97316;">$39.99</strong>. Feed the whole crew.</p><span
+              class="inline-block font-mono text-xs px-3 py-1 rounded-full"
+              style="background:rgba(249,115,22,0.1); color:#f97316;">Weekends Only</span>
+          </div>
+          <div class="scroll-reveal promo-card rounded-2xl p-8 border-2 relative overflow-hidden"
+            style="background:#171717; border-color:#262626;">
+            <div class="absolute top-0 right-0 px-4 py-2 font-mono font-bold text-xs rounded-bl-xl"
+              style="background:#f59e0b; color:#0f0f0f;">
+              FREE
+            </div><span class="text-5xl">🥤</span>
+            <h3 class="font-display text-2xl mt-4 mb-2" style="color:#f5f5f5;">FREE SHAKE FRIDAYS</h3>
+            <p class="font-mono text-sm mb-4" style="color:#a3a3a3;">Buy any two burgers and get a milkshake on the
+              house. Any flavor.</p><span class="inline-block font-mono text-xs px-3 py-1 rounded-full"
+              style="background:rgba(245,158,11,0.1); color:#f59e0b;">Every Friday</span>
+          </div>
+          <div class="scroll-reveal promo-card rounded-2xl p-8 border-2 relative overflow-hidden"
+            style="background:#171717; border-color:#262626;">
+            <div class="absolute top-0 right-0 px-4 py-2 font-mono font-bold text-xs rounded-bl-xl"
+              style="background:#f97316; color:#0f0f0f;">
+              LOYALTY
+            </div><span class="text-5xl">⭐</span>
+            <h3 class="font-display text-2xl mt-4 mb-2" style="color:#f5f5f5;">BITE CLUB</h3>
+            <p class="font-mono text-sm mb-4" style="color:#a3a3a3;">Join our loyalty program. Every 10th burger is
+              free. Plus birthday treats!</p><span class="inline-block font-mono text-xs px-3 py-1 rounded-full"
+              style="background:rgba(249,115,22,0.1); color:#f97316;">Always Active</span>
+          </div>
+        </div>
+      </div>
+    </section><!-- CONTACT -->
+    <section id="contact" class="py-24 px-6"
+      style="background:linear-gradient(180deg, transparent 0%, rgba(245,158,11,0.05) 100%);">
+      <div class="max-w-4xl mx-auto">
+        <h2 id="contact-heading" class="scroll-reveal font-display text-4xl md:text-5xl text-center mb-16"
+          style="color:#f59e0b;">FIND US</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div class="scroll-reveal p-6 rounded-2xl border transition-colors hover:border-amber-500/50"
+            style="background:#171717; border-color:#262626;">
+            <div class="text-3xl mb-3">
+              📍
+            </div>
+            <h3 class="font-display text-lg mb-2" style="color:#f5f5f5;">LOCATION</h3>
+            <p class="font-mono text-sm" style="color:#a3a3a3;">742 Grill Street<br>
+              Downtown, NY 10001</p>
+          </div>
+          <div class="scroll-reveal p-6 rounded-2xl border transition-colors hover:border-amber-500/50"
+            style="background:#171717; border-color:#262626;">
+            <div class="text-3xl mb-3">
+              🕐
+            </div>
+            <h3 class="font-display text-lg mb-2" style="color:#f5f5f5;">HOURS</h3>
+            <p class="font-mono text-sm" style="color:#a3a3a3;">Mon–Thu: 11am–10pm<br>
+              Fri–Sun: 11am–12am</p>
+          </div>
+          <div class="scroll-reveal p-6 rounded-2xl border transition-colors hover:border-amber-500/50"
+            style="background:#171717; border-color:#262626;">
+            <div class="text-3xl mb-3">
+              📞
+            </div>
+            <h3 class="font-display text-lg mb-2" style="color:#f5f5f5;">CONTACT</h3>
+            <p class="font-mono text-sm" style="color:#a3a3a3;">(555) BIG-BITE<br>
+              hello@bigbiteburgers.com</p>
+          </div>
+        </div><!-- Contact Form -->
+        <div class="scroll-reveal mt-12 p-8 rounded-2xl border" style="background:#171717; border-color:#262626;">
+          <h3 class="font-display text-xl mb-6 text-center" style="color:#f5f5f5;">DROP US A LINE</h3>
+          <form id="contact-form" class="space-y-4 max-w-lg mx-auto">
+            <div><label for="name" class="font-mono text-xs block mb-1" style="color:#737373;">NAME</label> <input
+                type="text" id="name" placeholder="Your name"
+                class="w-full px-4 py-3 rounded-lg font-mono text-sm border focus:outline-none focus:border-amber-500 transition-colors"
+                style="background:#0f0f0f; border-color:#262626; color:#f5f5f5;">
+            </div>
+            <div><label for="email" class="font-mono text-xs block mb-1" style="color:#737373;">EMAIL</label> <input
+                type="email" id="email" placeholder="your@email.com"
+                class="w-full px-4 py-3 rounded-lg font-mono text-sm border focus:outline-none focus:border-amber-500 transition-colors"
+                style="background:#0f0f0f; border-color:#262626; color:#f5f5f5;">
+            </div>
+            <div><label for="message" class="font-mono text-xs block mb-1" style="color:#737373;">MESSAGE</label>
+              <textarea id="message" rows="3" placeholder="Tell us what's on your mind..."
+                class="w-full px-4 py-3 rounded-lg font-mono text-sm border focus:outline-none focus:border-amber-500 transition-colors resize-none"
+                style="background:#0f0f0f; border-color:#262626; color:#f5f5f5;"></textarea>
+            </div><button type="submit"
+              class="w-full py-3 rounded-lg font-mono font-bold text-sm tracking-widest transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/20"
+              style="background:#f59e0b; color:#0f0f0f;">SEND IT 🔥</button>
+            <p id="form-success" class="hidden font-mono text-sm text-center" style="color:#22c55e;">✓ Message sent!
+              We'll get back to you soon.</p>
+          </form>
+        </div>
+      </div>
+    </section><!-- FOOTER -->
+    <footer class="py-12 px-6 border-t" style="border-color:#262626;">
+      <div class="max-w-6xl mx-auto text-center"><span class="font-display text-2xl" style="color:#f59e0b;">BIG BITE
+          🍔</span>
+        <p class="font-mono text-xs mt-4" style="color:#525252;">© 2026 Big Bite Burgers. All rights reserved. Made with
+          🔥</p>
+      </div>
+    </footer>
+  </div>
+  <script>
+    const defaultConfig = {
+      background_color: '#0f0f0f',
+      surface_color: '#171717',
+      text_color: '#f5f5f5',
+      primary_action_color: '#f59e0b',
+      secondary_action_color: '#f97316',
+      font_family: 'Archivo Black',
+      font_size: 16,
+      hero_title: 'BIG BITE BURGERS',
+      hero_subtitle: 'Smashed to perfection since 2019',
+      menu_heading: 'OUR MENU',
+      promo_heading: 'HOT DEALS',
+      contact_heading: 'FIND US'
+    };
+
+    function applyConfig(config) {
+      const c = { ...defaultConfig, ...config };
+      const bg = c.background_color;
+      const surface = c.surface_color;
+      const text = c.text_color;
+      const primary = c.primary_action_color;
+      const secondary = c.secondary_action_color;
+      const font = c.font_family;
+      const baseSize = c.font_size;
+
+      document.body.style.backgroundColor = bg;
+      document.body.style.color = text;
+
+      // Hero
+      const heroTitle = document.getElementById('hero-title');
+      heroTitle.textContent = c.hero_title;
+      heroTitle.style.color = primary;
+      heroTitle.style.fontFamily = `${font}, sans-serif`;
+      heroTitle.style.fontSize = `${baseSize * 4}px`;
+
+      const heroSub = document.getElementById('hero-subtitle');
+      heroSub.textContent = c.hero_subtitle;
+      heroSub.style.color = '#a3a3a3';
+
+      // Section headings
+      const menuH = document.getElementById('menu-heading');
+      menuH.textContent = c.menu_heading;
+      menuH.style.color = primary;
+      menuH.style.fontFamily = `${font}, sans-serif`;
+
+      const promoH = document.getElementById('promo-heading');
+      promoH.textContent = c.promo_heading;
+      promoH.style.color = primary;
+      promoH.style.fontFamily = `${font}, sans-serif`;
+
+      const contactH = document.getElementById('contact-heading');
+      contactH.textContent = c.contact_heading;
+      contactH.style.color = primary;
+      contactH.style.fontFamily = `${font}, sans-serif`;
+
+      // Surface cards
+      document.querySelectorAll('[style*="background:#171717"]').forEach(el => {
+        el.style.background = surface;
+      });
+
+      // Primary color elements
+      document.querySelectorAll('.font-display').forEach(el => {
+        el.style.fontFamily = `${font}, sans-serif`;
+      });
+
+      // Prices
+      document.querySelectorAll('[style*="color:#f59e0b"]').forEach(el => {
+        el.style.color = primary;
+      });
+    }
+
+    // Element SDK init
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => applyConfig(config),
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+            { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+            { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+            { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+            { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['hero_title', config.hero_title || defaultConfig.hero_title],
+          ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle],
+          ['menu_heading', config.menu_heading || defaultConfig.menu_heading],
+          ['promo_heading', config.promo_heading || defaultConfig.promo_heading],
+          ['contact_heading', config.contact_heading || defaultConfig.contact_heading]
+        ])
+      });
+    }
+
+    // Mobile menu toggle
+    document.getElementById('mobile-toggle').addEventListener('click', () => {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+      menu.classList.toggle('flex');
+    });
+    document.querySelectorAll('#mobile-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.add('hidden');
+        document.getElementById('mobile-menu').classList.remove('flex');
+      });
+    });
+
+    // Form handling
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('form-success').classList.remove('hidden');
+      e.target.reset();
+      setTimeout(() => document.getElementById('form-success').classList.add('hidden'), 3000);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    lucide.createIcons();
+  </script>
+  <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9eb9727af4fd84b8',t:'MTc3NjA3MjU3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>

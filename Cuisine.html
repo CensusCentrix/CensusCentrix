@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kusina ni Lola</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bark: '#3E2723',
+            tierra: '#5D4037',
+            kulay: '#8D6E63',
+            buhangin: '#D7CCC8',
+            ginto: '#C9A84C',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .font-display {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    .font-body {
+      font-family: 'Libre Baskerville', Georgia, serif;
+    }
+
+    .woven-pattern {
+      background-image:
+        repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(201, 168, 76, 0.06) 8px, rgba(201, 168, 76, 0.06) 9px),
+        repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(201, 168, 76, 0.06) 8px, rgba(201, 168, 76, 0.06) 9px);
+    }
+
+    .hero-bg {
+      background:
+        linear-gradient(160deg, rgba(62, 39, 35, 0.92) 0%, rgba(93, 64, 55, 0.85) 50%, rgba(62, 39, 35, 0.9) 100%),
+        repeating-conic-gradient(rgba(201, 168, 76, 0.08) 0% 25%, transparent 0% 50%) 0 0 / 40px 40px;
+    }
+
+    .capiz-glow {
+      box-shadow: 0 0 40px rgba(201, 168, 76, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-card {
+      background: linear-gradient(135deg, rgba(62, 39, 35, 0.95), rgba(93, 64, 55, 0.9));
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(201, 168, 76, 0.1);
+    }
+
+    .dish-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #C9A84C, #8D6E63);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 16px rgba(201, 168, 76, 0.3);
+    }
+
+    .gold-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+    }
+
+    .testimonial-card {
+      background: rgba(62, 39, 35, 0.6);
+      border-left: 3px solid #C9A84C;
+      backdrop-filter: blur(4px);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-up {
+      animation: fadeUp 0.7s ease-out forwards;
+      opacity: 0;
+    }
+
+    .fade-up-d1 {
+      animation-delay: 0.1s;
+    }
+
+    .fade-up-d2 {
+      animation-delay: 0.2s;
+    }
+
+    .fade-up-d3 {
+      animation-delay: 0.3s;
+    }
+
+    .fade-up-d4 {
+      animation-delay: 0.4s;
+    }
+
+    .nav-link {
+      position: relative;
+      color: #D7CCC8;
+      transition: color 0.3s;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #C9A84C;
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #C9A84C;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .reservation-btn {
+      background: linear-gradient(135deg, #C9A84C, #a8873a);
+      transition: all 0.3s;
+      box-shadow: 0 4px 16px rgba(201, 168, 76, 0.3);
+    }
+
+    .reservation-btn:hover {
+      box-shadow: 0 6px 24px rgba(201, 168, 76, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile nav */
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .mobile-menu.open {
+      max-height: 500px;
+    }
+  </style>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+</head>
+
+<body class="h-full font-body" style="background-color:#2C1B14; color:#D7CCC8;">
+  <div id="app-root" class="w-full h-full overflow-auto"><!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50"
+      style="background:rgba(44,27,20,0.95); backdrop-filter:blur(8px); border-bottom:1px solid rgba(201,168,76,0.15);">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center justify-between h-16"><a href="#home"
+            class="font-display text-xl sm:text-2xl font-bold" style="color:#C9A84C;">Kusina ni Lola</a>
+          <div class="hidden md:flex items-center gap-6"><a href="#home" class="nav-link text-sm">Home</a> <a
+              href="#about" class="nav-link text-sm">About</a> <a href="#menu" class="nav-link text-sm">Menu</a> <a
+              href="#bestsellers" class="nav-link text-sm">Best Sellers</a> <a href="#testimonials"
+              class="nav-link text-sm">Testimonials</a> <a href="#location" class="nav-link text-sm">Location</a> <a
+              href="#contact" class="nav-link text-sm">Contact</a>
+          </div><button id="mobile-toggle" class="md:hidden p-2" aria-label="Toggle menu"> <i data-lucide="menu"
+              style="width:24px;height:24px;color:#C9A84C;"></i> </button>
+        </div>
+        <div id="mobile-menu" class="mobile-menu md:hidden">
+          <div class="flex flex-col gap-3 pb-4"><a href="#home" class="nav-link text-sm py-1">Home</a> <a href="#about"
+              class="nav-link text-sm py-1">About</a> <a href="#menu" class="nav-link text-sm py-1">Menu</a> <a
+              href="#bestsellers" class="nav-link text-sm py-1">Best Sellers</a> <a href="#testimonials"
+              class="nav-link text-sm py-1">Testimonials</a> <a href="#location"
+              class="nav-link text-sm py-1">Location</a> <a href="#contact" class="nav-link text-sm py-1">Contact</a>
+          </div>
+        </div>
+      </div>
+    </nav><!-- Hero -->
+    <section id="home" class="hero-bg relative" style="padding-top:64px;">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-36 text-center">
+        <div class="inline-block mb-6 px-4 py-1 rounded-full text-xs tracking-widest uppercase"
+          style="border:1px solid rgba(201,168,76,0.4); color:#C9A84C;">
+          Est. 1987
+        </div>
+        <h1 id="hero-title" class="font-display text-4xl sm:text-6xl lg:text-7xl font-bold mb-4 fade-up"
+          style="color:#D7CCC8; line-height:1.1;">Kusina ni Lola</h1>
+        <div class="gold-divider max-w-xs mx-auto my-6 fade-up fade-up-d1"></div>
+        <p id="hero-subtitle" class="font-display text-lg sm:text-2xl italic mb-8 fade-up fade-up-d2"
+          style="color:#C9A84C;">Authentic Filipino Home Cooking</p>
+        <p class="max-w-lg mx-auto text-sm sm:text-base mb-10 fade-up fade-up-d3" style="color:rgba(215,204,200,0.7);">
+          Where every dish carries the love and tradition of a Filipino grandmother's kitchen</p><a href="#contact"
+          class="reservation-btn inline-block px-8 py-3 rounded-lg font-display font-bold text-sm tracking-wide fade-up fade-up-d4"
+          style="color:#2C1B14;">Reserve a Table</a>
+      </div><!-- Decorative bottom wave -->
+      <svg class="w-full" style="margin-bottom:-1px;" viewbox="0 0 1200 60" preserveaspectratio="none">
+        <path d="M0,60 C300,0 900,0 1200,60 L1200,60 L0,60Z" fill="#2C1B14" />
+      </svg>
+    </section><!-- About -->
+    <section id="about" class="woven-pattern py-16 sm:py-24">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="scroll-reveal text-center mb-12">
+          <p class="text-xs tracking-widest uppercase mb-2" style="color:#C9A84C;">Our Story</p>
+          <h2 id="about-heading" class="font-display text-3xl sm:text-4xl font-bold mb-2" style="color:#D7CCC8;">A
+            Family Tradition</h2>
+          <div class="gold-divider max-w-xs mx-auto my-4"></div>
+        </div>
+        <div class="scroll-reveal grid md:grid-cols-2 gap-8 items-center">
+          <div class="capiz-glow rounded-2xl overflow-hidden"
+            style="background:linear-gradient(135deg,#5D4037,#3E2723); padding:2px;">
+            <div class="rounded-2xl p-8 text-center" style="background:#3E2723;">
+              <div class="text-6xl mb-4">
+                👵🏽
+              </div>
+              <p class="font-display text-lg italic" style="color:#C9A84C;">"Ang pagkain ay pagmamahal"</p>
+              <p class="text-xs mt-2" style="color:rgba(215,204,200,0.5);">Food is love</p>
+            </div>
+          </div>
+          <div>
+            <p id="about-text" class="text-sm leading-relaxed mb-4" style="color:rgba(215,204,200,0.8);">Since 1987,
+              Kusina ni Lola has been serving the heartwarming flavors of the Philippines. What began as Lola Carmen's
+              small carinderia has blossomed into a beloved gathering place where three generations of family recipes
+              come alive.</p>
+            <p class="text-sm leading-relaxed mb-6" style="color:rgba(215,204,200,0.6);">Every dish is prepared with the
+              same care and attention Lola taught us — from hand-ground spices to slow-simmered broths. We invite you to
+              sit at our table and taste the love in every bite.</p>
+            <div class="flex flex-wrap gap-4">
+              <div class="text-center">
+                <span class="font-display text-2xl font-bold block" style="color:#C9A84C;">37+</span><span
+                  class="text-xs" style="color:rgba(215,204,200,0.5);">Years</span>
+              </div>
+              <div class="text-center">
+                <span class="font-display text-2xl font-bold block" style="color:#C9A84C;">50+</span><span
+                  class="text-xs" style="color:rgba(215,204,200,0.5);">Recipes</span>
+              </div>
+              <div class="text-center">
+                <span class="font-display text-2xl font-bold block" style="color:#C9A84C;">3</span><span class="text-xs"
+                  style="color:rgba(215,204,200,0.5);">Generations</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- Menu -->
+    <section id="menu" class="py-16 sm:py-24" style="background:linear-gradient(180deg,#2C1B14,#1a100b);">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="scroll-reveal text-center mb-12">
+          <p class="text-xs tracking-widest uppercase mb-2" style="color:#C9A84C;">Taste of Home</p>
+          <h2 id="menu-heading" class="font-display text-3xl sm:text-4xl font-bold mb-2" style="color:#D7CCC8;">Our Menu
+          </h2>
+          <div class="gold-divider max-w-xs mx-auto my-4"></div>
+        </div>
+        <div class="scroll-reveal grid sm:grid-cols-2 lg:grid-cols-4 gap-4"><!-- Menu categories -->
+          <div class="menu-card rounded-xl p-6 text-center">
+            <div class="dish-icon">
+              🍲
+            </div>
+            <h3 class="font-display font-bold mb-2" style="color:#C9A84C;">Ulam</h3>
+            <p class="text-xs" style="color:rgba(215,204,200,0.6);">Main dishes including Adobo, Sinigang, Kare-Kare,
+              Bistek, Mechado</p>
+            <p class="font-display font-bold mt-3 text-sm" style="color:#D7CCC8;">₱280 – ₱450</p>
+          </div>
+          <div class="menu-card rounded-xl p-6 text-center">
+            <div class="dish-icon">
+              🥘
+            </div>
+            <h3 class="font-display font-bold mb-2" style="color:#C9A84C;">Pulutan</h3>
+            <p class="text-xs" style="color:rgba(215,204,200,0.6);">Appetizers like Sisig, Chicharrón, Tokwa't Baboy,
+              Lumpiang Shanghai</p>
+            <p class="font-display font-bold mt-3 text-sm" style="color:#D7CCC8;">₱180 – ₱320</p>
+          </div>
+          <div class="menu-card rounded-xl p-6 text-center">
+            <div class="dish-icon">
+              🍚
+            </div>
+            <h3 class="font-display font-bold mb-2" style="color:#C9A84C;">Kanin &amp; Sabaw</h3>
+            <p class="text-xs" style="color:rgba(215,204,200,0.6);">Rice varieties and soups — Garlic Rice, Tinola,
+              Bulalo, Nilaga</p>
+            <p class="font-display font-bold mt-3 text-sm" style="color:#D7CCC8;">₱60 – ₱350</p>
+          </div>
+          <div class="menu-card rounded-xl p-6 text-center">
+            <div class="dish-icon">
+              🍧
+            </div>
+            <h3 class="font-display font-bold mb-2" style="color:#C9A84C;">Panghimagas</h3>
+            <p class="text-xs" style="color:rgba(215,204,200,0.6);">Desserts — Halo-Halo, Leche Flan, Bibingka, Turon,
+              Ube Halaya</p>
+            <p class="font-display font-bold mt-3 text-sm" style="color:#D7CCC8;">₱80 – ₱180</p>
+          </div>
+        </div>
+      </div>
+    </section><!-- Best Sellers -->
+    <section id="bestsellers" class="woven-pattern py-16 sm:py-24">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="scroll-reveal text-center mb-12">
+          <p class="text-xs tracking-widest uppercase mb-2" style="color:#C9A84C;">Lola's Favorites</p>
+          <h2 id="bestsellers-heading" class="font-display text-3xl sm:text-4xl font-bold mb-2" style="color:#D7CCC8;">
+            Best Sellers</h2>
+          <div class="gold-divider max-w-xs mx-auto my-4"></div>
+        </div>
+        <div class="scroll-reveal grid sm:grid-cols-2 gap-6"><!-- Adobo -->
+          <div class="capiz-glow rounded-2xl overflow-hidden"
+            style="background:linear-gradient(135deg,rgba(93,64,55,0.5),rgba(62,39,35,0.8)); border:1px solid rgba(201,168,76,0.15);">
+            <div class="p-6 flex gap-4 items-start">
+              <div class="text-5xl flex-shrink-0">
+                🍗
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="font-display text-lg font-bold" style="color:#C9A84C;">Chicken &amp; Pork Adobo</h3><span
+                    class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(201,168,76,0.2); color:#C9A84C;">★
+                    #1</span>
+                </div>
+                <p class="text-xs mb-2" style="color:rgba(215,204,200,0.6);">Braised in soy sauce, vinegar, garlic &amp;
+                  bay leaves — Lola's original 1987 recipe</p>
+                <p class="font-display font-bold" style="color:#D7CCC8;">₱320</p>
+              </div>
+            </div>
+          </div><!-- Sinigang -->
+          <div class="capiz-glow rounded-2xl overflow-hidden"
+            style="background:linear-gradient(135deg,rgba(93,64,55,0.5),rgba(62,39,35,0.8)); border:1px solid rgba(201,168,76,0.15);">
+            <div class="p-6 flex gap-4 items-start">
+              <div class="text-5xl flex-shrink-0">
+                🥣
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="font-display text-lg font-bold" style="color:#C9A84C;">Sinigang na Baboy</h3><span
+                    class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(201,168,76,0.2); color:#C9A84C;">★
+                    #2</span>
+                </div>
+                <p class="text-xs mb-2" style="color:rgba(215,204,200,0.6);">Tamarind-soured pork soup with kangkong,
+                  radish, string beans &amp; tomatoes</p>
+                <p class="font-display font-bold" style="color:#D7CCC8;">₱350</p>
+              </div>
+            </div>
+          </div><!-- Kare-Kare -->
+          <div class="capiz-glow rounded-2xl overflow-hidden"
+            style="background:linear-gradient(135deg,rgba(93,64,55,0.5),rgba(62,39,35,0.8)); border:1px solid rgba(201,168,76,0.15);">
+            <div class="p-6 flex gap-4 items-start">
+              <div class="text-5xl flex-shrink-0">
+                🥜
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="font-display text-lg font-bold" style="color:#C9A84C;">Kare-Kare</h3><span
+                    class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(201,168,76,0.2); color:#C9A84C;">★
+                    #3</span>
+                </div>
+                <p class="text-xs mb-2" style="color:rgba(215,204,200,0.6);">Rich peanut-based oxtail stew with
+                  eggplant, banana blossom &amp; bagoong</p>
+                <p class="font-display font-bold" style="color:#D7CCC8;">₱420</p>
+              </div>
+            </div>
+          </div><!-- Halo-Halo -->
+          <div class="capiz-glow rounded-2xl overflow-hidden"
+            style="background:linear-gradient(135deg,rgba(93,64,55,0.5),rgba(62,39,35,0.8)); border:1px solid rgba(201,168,76,0.15);">
+            <div class="p-6 flex gap-4 items-start">
+              <div class="text-5xl flex-shrink-0">
+                🍧
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="font-display text-lg font-bold" style="color:#C9A84C;">Special Halo-Halo</h3><span
+                    class="text-xs px-2 py-0.5 rounded-full" style="background:rgba(201,168,76,0.2); color:#C9A84C;">★
+                    #4</span>
+                </div>
+                <p class="text-xs mb-2" style="color:rgba(215,204,200,0.6);">Shaved ice with ube, leche flan, sweetened
+                  beans, nata de coco &amp; more</p>
+                <p class="font-display font-bold" style="color:#D7CCC8;">₱160</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- Testimonials -->
+    <section id="testimonials" class="py-16 sm:py-24" style="background:linear-gradient(180deg,#1a100b,#2C1B14);">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="scroll-reveal text-center mb-12">
+          <p class="text-xs tracking-widest uppercase mb-2" style="color:#C9A84C;">What They Say</p>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold mb-2" style="color:#D7CCC8;">Testimonials</h2>
+          <div class="gold-divider max-w-xs mx-auto my-4"></div>
+        </div>
+        <div class="scroll-reveal grid md:grid-cols-3 gap-4">
+          <div class="testimonial-card rounded-xl p-6">
+            <div class="text-2xl mb-3" style="color:#C9A84C;">
+              ★★★★★
+            </div>
+            <p class="text-sm italic mb-4" style="color:rgba(215,204,200,0.8);">"The adobo here tastes exactly like my
+              lola used to make. I cried a little. Best Filipino food in the city!"</p>
+            <p class="font-display font-bold text-sm" style="color:#C9A84C;">— Maria S.</p>
+          </div>
+          <div class="testimonial-card rounded-xl p-6">
+            <div class="text-2xl mb-3" style="color:#C9A84C;">
+              ★★★★★
+            </div>
+            <p class="text-sm italic mb-4" style="color:rgba(215,204,200,0.8);">"Brought my non-Filipino friends here
+              and they fell in love with the kare-kare. The ambiance feels like a real Filipino home."</p>
+            <p class="font-display font-bold text-sm" style="color:#C9A84C;">— James R.</p>
+          </div>
+          <div class="testimonial-card rounded-xl p-6">
+            <div class="text-2xl mb-3" style="color:#C9A84C;">
+              ★★★★★
+            </div>
+            <p class="text-sm italic mb-4" style="color:rgba(215,204,200,0.8);">"Their halo-halo is legendary! Generous
+              portions, fair prices, and the staff treats you like family. We come every Sunday."</p>
+            <p class="font-display font-bold text-sm" style="color:#C9A84C;">— Tita Belen</p>
+          </div>
+        </div>
+      </div>
+    </section><!-- Location & Hours -->
+    <section id="location" class="woven-pattern py-16 sm:py-24">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="scroll-reveal text-center mb-12">
+          <p class="text-xs tracking-widest uppercase mb-2" style="color:#C9A84C;">Visit Us</p>
+          <h2 id="location-heading" class="font-display text-3xl sm:text-4xl font-bold mb-2" style="color:#D7CCC8;">Find
+            Us</h2>
+          <div class="gold-divider max-w-xs mx-auto my-4"></div>
+        </div>
+        <div class="scroll-reveal grid md:grid-cols-2 gap-8">
+          <div class="rounded-2xl overflow-hidden capiz-glow" style="min-height:300px; background:#3E2723;"><iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.802548!2d120.9842195!3d14.5995124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397ca03571ec38b%3A0x69d1d5751069c11f!2sManila%2C%20Metro%20Manila%2C%20Philippines!5e0!3m2!1sen!2sph!4v1700000000000"
+              width="100%" height="100%" style="border:0; min-height:300px;" allowfullscreen loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" title="Restaurant location map"></iframe>
+          </div>
+          <div>
+            <div class="mb-6">
+              <h3 class="font-display font-bold text-lg mb-3" style="color:#C9A84C;"><i data-lucide="map-pin"
+                  style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i> Address
+              </h3>
+              <p class="text-sm" style="color:rgba(215,204,200,0.7);">123 Mabini Street, Brgy. San Antonio<br>
+                Makati City, Metro Manila 1203</p>
+            </div>
+            <div class="mb-6">
+              <h3 class="font-display font-bold text-lg mb-3" style="color:#C9A84C;"><i data-lucide="clock"
+                  style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i> Business
+                Hours</h3>
+              <div class="text-sm space-y-1" style="color:rgba(215,204,200,0.7);">
+                <p><strong style="color:#D7CCC8;">Mon – Thu:</strong> 10:00 AM – 9:00 PM</p>
+                <p><strong style="color:#D7CCC8;">Fri – Sat:</strong> 10:00 AM – 10:00 PM</p>
+                <p><strong style="color:#D7CCC8;">Sunday:</strong> 8:00 AM – 9:00 PM <span class="text-xs"
+                    style="color:#C9A84C;">(Brunch menu!)</span></p>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-lg mb-3" style="color:#C9A84C;"><i data-lucide="phone"
+                  style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i> Contact
+              </h3>
+              <p class="text-sm" style="color:rgba(215,204,200,0.7);">+63 (2) 8123-4567<br>
+                hello@kusinanilola.ph</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- Contact / Reservation -->
+    <section id="contact" class="py-16 sm:py-24" style="background:linear-gradient(180deg,#2C1B14,#1a100b);">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <div class="scroll-reveal text-center mb-12">
+          <p class="text-xs tracking-widest uppercase mb-2" style="color:#C9A84C;">Reserve a Table</p>
+          <h2 id="contact-heading" class="font-display text-3xl sm:text-4xl font-bold mb-2" style="color:#D7CCC8;">Get
+            In Touch</h2>
+          <div class="gold-divider max-w-xs mx-auto my-4"></div>
+        </div>
+        <form id="reservation-form" class="scroll-reveal capiz-glow rounded-2xl p-6 sm:p-8"
+          style="background:linear-gradient(135deg,rgba(62,39,35,0.95),rgba(93,64,55,0.9)); border:1px solid rgba(201,168,76,0.2);">
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div><label for="res-name" class="block text-xs mb-1 font-display" style="color:#C9A84C;">Name</label>
+              <input id="res-name" type="text" placeholder="Juan dela Cruz"
+                class="w-full rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+                style="background:rgba(44,27,20,0.8); border:1px solid rgba(201,168,76,0.2); color:#D7CCC8; --tw-ring-color:#C9A84C;">
+            </div>
+            <div><label for="res-phone" class="block text-xs mb-1 font-display" style="color:#C9A84C;">Phone</label>
+              <input id="res-phone" type="tel" placeholder="+63 9XX XXX XXXX"
+                class="w-full rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+                style="background:rgba(44,27,20,0.8); border:1px solid rgba(201,168,76,0.2); color:#D7CCC8; --tw-ring-color:#C9A84C;">
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div><label for="res-date" class="block text-xs mb-1 font-display" style="color:#C9A84C;">Date</label>
+              <input id="res-date" type="date"
+                class="w-full rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+                style="background:rgba(44,27,20,0.8); border:1px solid rgba(201,168,76,0.2); color:#D7CCC8; --tw-ring-color:#C9A84C;">
+            </div>
+            <div><label for="res-guests" class="block text-xs mb-1 font-display" style="color:#C9A84C;">Guests</label>
+              <select id="res-guests" class="w-full rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+                style="background:rgba(44,27,20,0.8); border:1px solid rgba(201,168,76,0.2); color:#D7CCC8; --tw-ring-color:#C9A84C;">
+                <option>1 – 2 guests</option>
+                <option>3 – 4 guests</option>
+                <option>5 – 6 guests</option>
+                <option>7 – 10 guests</option>
+                <option>10+ guests (group)</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-6"><label for="res-message" class="block text-xs mb-1 font-display"
+              style="color:#C9A84C;">Special Requests</label> <textarea id="res-message" rows="3"
+              placeholder="Allergies, celebrations, seating preferences..."
+              class="w-full rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 resize-none"
+              style="background:rgba(44,27,20,0.8); border:1px solid rgba(201,168,76,0.2); color:#D7CCC8; --tw-ring-color:#C9A84C;"></textarea>
+          </div><button type="submit"
+            class="reservation-btn w-full py-3 rounded-lg font-display font-bold text-sm tracking-wide"
+            style="color:#2C1B14;"> <i data-lucide="calendar-check"
+              style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Request
+            Reservation </button>
+          <div id="form-success" class="hidden mt-4 text-center p-3 rounded-lg text-sm"
+            style="background:rgba(201,168,76,0.15); color:#C9A84C;">
+            ✅ Salamat! We've received your reservation request. We'll confirm via phone shortly.
+          </div>
+        </form>
+      </div>
+    </section><!-- Footer -->
+    <footer class="py-8 text-center" style="background:#1a100b; border-top:1px solid rgba(201,168,76,0.1);">
+      <p class="font-display text-lg font-bold mb-2" style="color:#C9A84C;">Kusina ni Lola</p>
+      <p class="text-xs mb-4" style="color:rgba(215,204,200,0.4);">Authentic Filipino Home Cooking Since 1987</p>
+      <div class="flex justify-center gap-4 mb-4"><a href="#" class="p-2 rounded-full"
+          style="background:rgba(201,168,76,0.1); color:#C9A84C;" aria-label="Facebook"><i data-lucide="facebook"
+            style="width:18px;height:18px;"></i></a> <a href="#" class="p-2 rounded-full"
+          style="background:rgba(201,168,76,0.1); color:#C9A84C;" aria-label="Instagram"><i data-lucide="instagram"
+            style="width:18px;height:18px;"></i></a> <a href="#" class="p-2 rounded-full"
+          style="background:rgba(201,168,76,0.1); color:#C9A84C;" aria-label="Phone"><i data-lucide="phone"
+            style="width:18px;height:18px;"></i></a>
+      </div>
+      <p class="text-xs" style="color:rgba(215,204,200,0.3);">© 2026 Kusina ni Lola. All rights reserved.</p>
+    </footer>
+  </div>
+  <script>
+    // Default config
+    const defaultConfig = {
+      hero_title: 'Kusina ni Lola',
+      hero_subtitle: 'Authentic Filipino Home Cooking',
+      about_heading: 'A Family Tradition',
+      about_text: 'Since 1987, Kusina ni Lola has been serving the heartwarming flavors of the Philippines. What began as Lola Carmen\'s small carinderia has blossomed into a beloved gathering place where three generations of family recipes come alive.',
+      menu_heading: 'Our Menu',
+      bestsellers_heading: 'Best Sellers',
+      location_heading: 'Find Us',
+      contact_heading: 'Get In Touch',
+      background_color: '#2C1B14',
+      surface_color: '#3E2723',
+      text_color: '#D7CCC8',
+      accent_color: '#C9A84C',
+      secondary_color: '#5D4037',
+      font_family: 'Playfair Display',
+      font_size: 16
+    };
+
+    // Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const c = { ...defaultConfig, ...config };
+          const $ = id => document.getElementById(id);
+
+          $('hero-title').textContent = c.hero_title;
+          $('hero-subtitle').textContent = c.hero_subtitle;
+          $('about-heading').textContent = c.about_heading;
+          $('about-text').textContent = c.about_text;
+          $('menu-heading').textContent = c.menu_heading;
+          $('bestsellers-heading').textContent = c.bestsellers_heading;
+          $('location-heading').textContent = c.location_heading;
+          $('contact-heading').textContent = c.contact_heading;
+
+          // Colors
+          document.body.style.backgroundColor = c.background_color;
+          document.body.style.color = c.text_color;
+
+          // Font
+          const ff = c.font_family + ', Georgia, serif';
+          document.querySelectorAll('.font-display').forEach(el => el.style.fontFamily = ff);
+
+          // Font size
+          const base = c.font_size || 16;
+          document.body.style.fontSize = base + 'px';
+          $('hero-title').style.fontSize = (base * 3.5) + 'px';
+          $('hero-subtitle').style.fontSize = (base * 1.5) + 'px';
+        },
+        mapToCapabilities: (config) => {
+          const c = { ...defaultConfig, ...config };
+          const makeColor = (key) => ({
+            get: () => c[key] || defaultConfig[key],
+            set: (v) => { c[key] = v; window.elementSdk.setConfig({ [key]: v }); }
+          });
+          return {
+            recolorables: [
+              makeColor('background_color'),
+              makeColor('surface_color'),
+              makeColor('text_color'),
+              makeColor('accent_color'),
+              makeColor('secondary_color')
+            ],
+            borderables: [],
+            fontEditable: {
+              get: () => c.font_family || defaultConfig.font_family,
+              set: (v) => { c.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+            },
+            fontSizeable: {
+              get: () => c.font_size || defaultConfig.font_size,
+              set: (v) => { c.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+            }
+          };
+        },
+        mapToEditPanelValues: (config) => {
+          const c = { ...defaultConfig, ...config };
+          return new Map([
+            ['hero_title', c.hero_title],
+            ['hero_subtitle', c.hero_subtitle],
+            ['about_heading', c.about_heading],
+            ['about_text', c.about_text],
+            ['menu_heading', c.menu_heading],
+            ['bestsellers_heading', c.bestsellers_heading],
+            ['location_heading', c.location_heading],
+            ['contact_heading', c.contact_heading]
+          ]);
+        }
+      });
+    }
+
+    // Mobile menu
+    document.getElementById('mobile-toggle').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    });
+    document.querySelectorAll('#mobile-menu a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('open'));
+    });
+
+    // Reservation form
+    document.getElementById('reservation-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('form-success').classList.remove('hidden');
+      e.target.reset();
+      setTimeout(() => document.getElementById('form-success').classList.add('hidden'), 5000);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Lucide
+    lucide.createIcons();
+  </script>
+  <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9eba020422d31f2b',t:'MTc3NjA3ODQ1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
