@@ -19,6 +19,6 @@ Currently a student rn, also a web developer. I am eager to provide service for 
 Below are my portfolio and project websites (they're just there as display to give you an idea):
 
 https://censuscentrix.github.io/CensusCentrix/myPortfolio.html
-https://censuscentrix.github.io/CensusCentrix/Snap Print Digital Solutions.html
+https://censuscentrix.github.io/CensusCentrix/Snap_Print_Digital_Solutions.html
 https://censuscentrix.github.io/CensusCentrix/Cuisine.html
-https://censuscentrix.github.io/CensusCentrix/Big Bite Burgers.html
+https://censuscentrix.github.io/CensusCentrix/Big_Bite_Burgers.html
