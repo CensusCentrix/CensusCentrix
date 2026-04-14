@@ -16,7 +16,5 @@ Here are some ideas to get you started:
 -->
 Currently a student rn, also a web developer. I am eager to provide service for you making your website/s.
 
-Below are my portfolio: 
 
-https://censuscentrix.github.io/CensusCentrix/myPortfolio.html
 
